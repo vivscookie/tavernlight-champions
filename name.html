@@ -67,7 +67,7 @@
 </div>
 </div>
 <!-- Fields Container -->
-<form class="flex flex-col gap-space-lg" id="onboarding-form" novalidate="" data-next="team.html">
+<form class="flex flex-col gap-space-lg" id="onboarding-form" onsubmit="event.preventDefault();">
 <!-- Input 1: Screen Name / Gamertag -->
 <div class="flex flex-col gap-space-xs">
 <div class="flex items-center justify-between">
@@ -82,13 +82,12 @@
 <div class="absolute left-4 flex items-center pointer-events-none text-outline">
 <span class="material-symbols-outlined" style="font-size: 20px;">badge</span>
 </div>
-<input class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface placeholder:text-outline/70 pl-12 pr-4 py-3.5 rounded-lg font-body-lg text-body-lg focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="gamertag" name="gamertag" placeholder="e.g. ShadowVivi or vivi99" type="text" value="vivi99" required="" minlength="3" maxlength="16" pattern="[A-Za-z0-9_\-]{3,16}" autocomplete="nickname" autocapitalize="off" spellcheck="false" aria-describedby="gamertag-help gamertag-error">
+<input class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface placeholder:text-outline/70 pl-12 pr-4 py-3.5 rounded-lg font-body-lg text-body-lg focus:outline-none focus:bg-surface-container-high transition-all shadow-inner" id="gamertag" name="gamertag" placeholder="e.g. ShadowVivi or vivi99" type="text" value="vivi99">
 </div>
-<p id="gamertag-help" class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-space-xs pt-1">
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-space-xs pt-1">
 <span class="material-symbols-outlined text-tertiary" style="font-size: 14px;">verified_user</span>
                 Allowed characters: letters, numerals, underscores, and dashes (3–16 chars).
               </p>
-<p id="gamertag-error" role="alert" class="font-body-sm text-body-sm text-error min-h-[1.25rem]"></p>
 </div>
 <!-- Input 2: Company Department Selection -->
 <div class="flex flex-col gap-space-xs">
@@ -105,7 +104,7 @@
 <div class="absolute left-4 flex items-center pointer-events-none text-outline">
 <span class="material-symbols-outlined" style="font-size: 20px;">account_tree</span>
 </div>
-<select class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface pl-12 pr-10 py-3.5 rounded-lg font-body-lg text-body-lg focus:outline-none focus:bg-surface-container-high transition-all appearance-none cursor-pointer shadow-inner" id="department" name="department" required="">
+<select class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface pl-12 pr-10 py-3.5 rounded-lg font-body-lg text-body-lg focus:outline-none focus:bg-surface-container-high transition-all appearance-none cursor-pointer shadow-inner" id="department" name="department">
 <option class="bg-surface-container-high text-outline" disabled="" value="">Select your studio branch...</option>
 <option class="bg-surface-container-high text-on-surface" value="game_design">Game Design</option>
 <option class="bg-surface-container-high text-on-surface" selected="" value="frontend_engineering">Frontend Engineering</option>
@@ -152,7 +151,7 @@
             Save Draft
           </button>
 <!-- Primary Flow Action -->
-<button class="w-full sm:w-auto px-space-xl py-3.5 rounded-full bg-gradient-to-r from-primary to-primary-container hover:from-primary-fixed-dim hover:to-primary text-on-primary font-title-ui text-title-ui uppercase tracking-wider flex items-center justify-center gap-space-sm shadow-[0_0_20px_rgba(229,169,60,0.35)] hover:shadow-[0_0_28px_rgba(255,198,101,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0" id="btn-continue" type="submit" form="onboarding-form">
+<button class="w-full sm:w-auto px-space-xl py-3.5 rounded-full bg-gradient-to-r from-primary to-primary-container hover:from-primary-fixed-dim hover:to-primary text-on-primary font-title-ui text-title-ui uppercase tracking-wider flex items-center justify-center gap-space-sm shadow-[0_0_20px_rgba(229,169,60,0.35)] hover:shadow-[0_0_28px_rgba(255,198,101,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0" id="btn-continue" type="button">
 <span class="">Continue to Step 2: Squad Selection</span>
 <span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
 </button>
@@ -161,107 +160,34 @@
 <!-- Reassurance Guild Footer Micro-Notice -->
 <div class="flex items-center justify-center gap-space-sm py-space-xs text-outline font-body-sm text-body-sm">
 <span class="material-symbols-outlined text-secondary" style="font-size: 16px;">lock_clock</span>
-<span id="autosave-status" role="status" aria-live="polite">Registration progress autosaves automatically every 30 seconds.</span>
+<span class="">Registration progress autosaves automatically every 30 seconds.</span>
 </div>
 </div>
 </div>
 </div>
 <script>
-(function () {
-  'use strict';
+  // Simple micro-interaction for draft saving feedback
+  document.getElementById('btn-save-draft')?.addEventListener('click', function() {
+    const originalText = this.innerHTML;
+    this.innerHTML = '<span class="material-symbols-outlined" style="font-size: 18px;">check_circle</span> Draft Inscribed';
+    this.classList.add('text-secondary');
+    setTimeout(() => {
+      this.innerHTML = originalText;
+      this.classList.remove('text-secondary');
+    }, 2200);
+  });
 
-  const DRAFT_KEY = 'tavernlight:registration:identity';
-  const AUTOSAVE_MS = 30000;
-
-  const form = document.getElementById('onboarding-form');
-  const gamertag = document.getElementById('gamertag');
-  const department = document.getElementById('department');
-  const errorEl = document.getElementById('gamertag-error');
-  const statusEl = document.getElementById('autosave-status');
-  const draftBtn = document.getElementById('btn-save-draft');
-  const continueBtn = document.getElementById('btn-continue');
-  const idleStatus = statusEl.textContent;
-
-  // ---------- Rascunho (localStorage; falhas de storage não quebram a tela) ----------
-  const snapshot = () => ({ gamertag: gamertag.value.trim(), department: department.value });
-
-  function saveDraft() {
-    try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...snapshot(), savedAt: Date.now() }));
-      return true;
-    } catch (e) {
-      return false;
+  document.getElementById('btn-continue')?.addEventListener('click', function() {
+    const gamertagInput = document.getElementById('gamertag');
+    if (!gamertagInput.value.trim()) {
+      gamertagInput.focus();
+      gamertagInput.classList.add('bg-error-container/30');
+      setTimeout(() => gamertagInput.classList.remove('bg-error-container/30'), 1500);
+      return;
     }
-  }
-
-  function loadDraft() {
-    try {
-      const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
-      if (!d) return;
-      if (typeof d.gamertag === 'string') gamertag.value = d.gamertag;
-      if ([...department.options].some((o) => o.value === d.department && !o.disabled)) department.value = d.department;
-    } catch (e) { /* rascunho corrompido: ignora */ }
-  }
-
-  function flashStatus(msg) {
-    statusEl.textContent = msg;
-    setTimeout(() => { statusEl.textContent = idleStatus; }, 2200);
-  }
-
-  // ---------- Validação ----------
-  function gamertagMessage() {
-    // Checa o valor diretamente: mensagens específicas, independentes das flags de validity
-    const v = gamertag.value.trim();
-    if (!v) return 'Enter your screen name.';
-    if (v.length < 3 || v.length > 16) return 'Use between 3 and 16 characters.';
-    if (!/^[A-Za-z0-9_-]+$/.test(v)) return 'Only letters, numerals, underscores and dashes are allowed.';
-    return '';
-  }
-
-  function validate() {
-    gamertag.value = gamertag.value.trim();
-    const msg = gamertagMessage();
-    gamertag.setCustomValidity(msg);
-    errorEl.textContent = msg;
-    gamertag.setAttribute('aria-invalid', String(Boolean(msg)));
-    if (msg) { gamertag.focus(); return false; }
-    if (!department.value) { department.setCustomValidity('Select your department.'); department.reportValidity(); department.focus(); return false; }
-    department.setCustomValidity('');
-    return true;
-  }
-
-  gamertag.addEventListener('input', () => {
-    gamertag.setCustomValidity('');
-    if (errorEl.textContent) { errorEl.textContent = gamertagMessage(); }
+    // Visual click feedback
+    this.innerHTML = '<span>Proceeding to Squads...</span> <span class="material-symbols-outlined animate-spin" style="font-size: 18px;">progress_activity</span>';
   });
-  department.addEventListener('change', () => department.setCustomValidity(''));
-
-  // ---------- Botões ----------
-  draftBtn.addEventListener('click', () => {
-    const ok = saveDraft();
-    flashStatus(ok ? 'Draft saved.' : 'Could not save the draft in this browser.');
-  });
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (continueBtn.disabled) return;           // evita envio duplicado
-    if (!validate()) return;
-
-    // TODO (backend): conferir unicidade do gamertag antes de avançar.
-    saveDraft();
-    continueBtn.disabled = true;
-    continueBtn.setAttribute('aria-busy', 'true');
-    continueBtn.innerHTML = '<span>Proceeding to Squads...</span> <span class="material-symbols-outlined animate-spin motion-reduce:animate-none" style="font-size: 18px;" aria-hidden="true">progress_activity</span>';
-    window.location.href = form.dataset.next;
-  });
-
-  // ---------- Autosave ----------
-  loadDraft();
-  setInterval(() => {
-    if (document.hidden || !gamertag.value.trim()) return;
-    if (saveDraft()) flashStatus('Progress autosaved.');
-  }, AUTOSAVE_MS);
-})();
 </script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20 py-space-xl mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-sm"><img alt="Tavernlight Crest" class="h-6 w-auto object-contain opacity-70" src="https://lh3.googleusercontent.com/aida/AEtjO1W05b4ZoAEmP9Nu1PCT1GnTqWQ6yj4a9L_eqMjCiWwwu6p8MUvukaUiQJAByASRlBJFoTlQ-grg2U9iyYx35QMIUViwZKxh9PnT3TksB-e5zMk4CyLnA8F5oJuTmFUOiEXr65YkyU0PA6UrZi7mGlEL3TOZwXWF60aT7l7JAmyceKuQyBtvgCpqN10Dg1gIilGw-c-NYLHE3fnE5GSpUsIO6C2wqQLFIBbom6fGJ_NtgVgsF-648cXvLA"><span class="font-headline-sm text-headline-sm text-on-surface">Tavernlight Studio</span><span class="text-outline">|</span><span class="">Internal Staff Champions League</span></div><div class="flex items-center gap-space-lg font-title-ui text-title-ui"><a class="hover:text-primary transition-colors" href="#">Schedule</a><a class="hover:text-primary transition-colors" href="#">Standings</a><a class="hover:text-primary transition-colors" href="#">Community Chat</a></div><div class="text-outline text-right">© Tavernlight Studio. Competitive Guild Arena.</div></div></footer>
 
 

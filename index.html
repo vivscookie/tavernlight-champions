@@ -51,7 +51,7 @@
 <span class="material-symbols-outlined text-[13px] text-secondary">timer</span> Next Match
             </span>
 <div class="flex items-baseline gap-space-xs mt-space-xs">
-<span class="font-stat-numeric text-stat-numeric text-primary-fixed" id="countdown-badge" data-start="2026-10-20T19:30:00-04:00">--h --m --s</span>
+<span class="font-stat-numeric text-stat-numeric text-primary-fixed" id="countdown-badge">02h 40m 52s</span>
 <span class="font-body-sm text-body-sm text-on-surface-variant">BO3</span>
 </div>
 </div>
@@ -108,7 +108,7 @@
 </div>
 <div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-1 rounded-full">
 <span class="material-symbols-outlined text-secondary text-sm">schedule</span>
-<span class="font-body-sm text-body-sm text-on-surface font-semibold" id="live-timer" data-start="2026-10-20T19:30:00-04:00">Loading kickoff time…</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold" id="live-timer">Tonight • 19:30 EST (in 02h 40m 52s)</span>
 </div>
 </div>
 <!-- Match Versus Arena -->
@@ -763,63 +763,60 @@
 </div>
 </div>
 <script>
-  (function () {
-    'use strict';
-
-    // ---------- Filtro do calendário ----------
-    const ACTIVE = ['bg-primary-container', 'text-on-primary-container', 'font-bold', 'shadow'];
-    const INACTIVE = ['text-on-surface-variant', 'hover:text-on-surface', 'hover:bg-surface-container-high'];
+  (function() {
+    // Dynamic Filter Interaction for Calendar
     const filterButtons = document.querySelectorAll('#calendar-filter-bar .cal-filter');
     const eventCards = document.querySelectorAll('#calendar-event-list .event-item');
 
-    function applyFilter(filterVal) {
-      filterButtons.forEach((b) => {
-        const isActive = b.dataset.filter === filterVal;
-        b.classList.remove(...(isActive ? INACTIVE : ACTIVE));
-        b.classList.add(...(isActive ? ACTIVE : INACTIVE));
-        b.setAttribute('aria-pressed', String(isActive));
-      });
-      eventCards.forEach((card) => {
-        // Comparação por token exato (e não por substring)
-        const tags = (card.dataset.tags || '').split(/\s+/).filter(Boolean);
-        card.classList.toggle('hidden', !(filterVal === 'all' || tags.includes(filterVal)));
-      });
-    }
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Reset classes
+        filterButtons.forEach(b => {
+          b.className = 'cal-filter px-space-md py-1 rounded-full text-xs font-title-ui text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all';
+        });
 
-    filterButtons.forEach((btn) => btn.addEventListener('click', () => applyFilter(btn.dataset.filter)));
+        // Activate clicked button
+        btn.className = 'cal-filter px-space-md py-1 rounded-full text-xs font-title-ui bg-primary-container text-on-primary-container font-bold shadow transition-all';
 
-    // ---------- Countdown baseado em horário-alvo ----------
+        const filterVal = btn.getAttribute('data-filter');
+
+        eventCards.forEach(card => {
+          const tags = card.getAttribute('data-tags') || '';
+          if (filterVal === 'all') {
+            card.style.display = 'flex';
+          } else if (tags.includes(filterVal)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Simple Countdown Simulation for the live upcoming match
+    let totalSeconds = 2 * 3600 + 45 * 60;
     const badgeEl = document.getElementById('countdown-badge');
     const timerEl = document.getElementById('live-timer');
-    const startAttr = (badgeEl || timerEl)?.dataset.start;
-    const target = startAttr ? new Date(startAttr) : null;
 
-    if (target && !Number.isNaN(target.getTime())) {
-      const pad = (n) => String(n).padStart(2, '0');
-      // Horário exibido no fuso do próprio usuário
-      const kickoff = new Intl.DateTimeFormat(undefined, {
-        weekday: 'short', hour: '2-digit', minute: '2-digit', timeZoneName: 'short',
-      }).format(target);
+    setInterval(() => {
+      if (totalSeconds > 0) {
+        totalSeconds--;
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        const hStr = hours < 10 ? '0' + hours : hours;
+        const mStr = minutes < 10 ? '0' + minutes : minutes;
+        const sStr = seconds < 10 ? '0' + seconds : seconds;
 
-      let intervalId = null;
-      const tick = () => {
-        // Recalcula a cada tick: não acumula atraso se a aba ficar em segundo plano
-        const total = Math.max(0, Math.round((target.getTime() - Date.now()) / 1000));
-        const text = `${pad(Math.floor(total / 3600))}h ${pad(Math.floor((total % 3600) / 60))}m ${pad(total % 60)}s`;
-
-        if (total === 0) {
-          if (badgeEl) badgeEl.textContent = 'Live now';
-          if (timerEl) timerEl.textContent = `${kickoff} • Live now`;
-          clearInterval(intervalId); // para o timer ao zerar
-          return;
+        if (badgeEl) {
+          badgeEl.textContent = `${hStr}h ${mStr}m ${sStr}s`;
         }
-        if (badgeEl) badgeEl.textContent = text;
-        if (timerEl) timerEl.textContent = `${kickoff} (in ${text})`;
-      };
-
-      tick();
-      intervalId = setInterval(tick, 1000);
-    }
+        if (timerEl) {
+          timerEl.textContent = `Tonight • 19:30 EST (in ${hStr}h ${mStr}m ${sStr}s)`;
+        }
+      }
+    }, 1000);
   })();
 </script></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20 py-space-xl mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-sm"><img alt="Tavernlight Crest" class="h-6 w-auto object-contain opacity-70" src="https://lh3.googleusercontent.com/aida/AEtjO1W05b4ZoAEmP9Nu1PCT1GnTqWQ6yj4a9L_eqMjCiWwwu6p8MUvukaUiQJAByASRlBJFoTlQ-grg2U9iyYx35QMIUViwZKxh9PnT3TksB-e5zMk4CyLnA8F5oJuTmFUOiEXr65YkyU0PA6UrZi7mGlEL3TOZwXWF60aT7l7JAmyceKuQyBtvgCpqN10Dg1gIilGw-c-NYLHE3fnE5GSpUsIO6C2wqQLFIBbom6fGJ_NtgVgsF-648cXvLA"><span class="font-headline-sm text-headline-sm text-on-surface">Tavernlight Studio</span><span class="text-outline">|</span><span class="">Internal Staff Champions League</span></div><div class="flex items-center gap-space-lg font-title-ui text-title-ui"><a class="hover:text-primary transition-colors" href="#">Community Guidelines</a><a class="hover:text-primary transition-colors" href="#">Match Schedule</a><a class="hover:text-primary transition-colors" href="#">Support</a></div><div class="text-outline text-right">© Tavernlight Studio. Competitive Guild Arena.</div></div></footer>
 

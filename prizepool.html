@@ -103,7 +103,7 @@
 </div>
 <div aria-label="Voluntary Cash Stake Tier" class="grid grid-cols-1 md:grid-cols-2 gap-space-md" id="stake-tier-group" role="radiogroup">
 <!-- Tier 0 -->
-<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="0" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all shadow-sm flex flex-col justify-between gap-space-md" onclick="selectTier(this, 0)"><div class="flex items-start justify-between gap-space-sm">
 <div class="flex items-center gap-space-sm">
 <div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center">
 <span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent"></span>
@@ -121,7 +121,7 @@
 <span class="">Pot Influence: 0%</span>
 </div></div>
 <!-- Tier 10 -->
-<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="10" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-all shadow-sm flex flex-col justify-between gap-space-md" onclick="selectTier(this, 10)"><div class="flex items-start justify-between gap-space-sm">
 <div class="flex items-center gap-space-sm">
 <div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-high flex items-center justify-center">
 <span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent"></span>
@@ -141,7 +141,7 @@ Standard baseline stake. A friendly voluntary buy-in added directly into the com
 <span class="">$10 added to the community pot</span>
 </div></div>
 <!-- Tier 25 (Recommended) -->
-<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-high shadow-md hover:bg-surface-container-highest transition-all flex flex-col justify-between gap-space-md" data-amount="25" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-high shadow-md hover:bg-surface-container-highest transition-all flex flex-col justify-between gap-space-md" onclick="selectTier(this, 25)"><div class="flex items-start justify-between gap-space-sm">
 <div class="flex items-center gap-space-sm">
 <div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-lowest flex items-center justify-center">
 <span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent"></span>
@@ -161,7 +161,7 @@ Recommended tier for competitive squads looking to raise the stakes. Fully quali
 <span class="">$25 added to the community pot</span>
 </div></div>
 <!-- Tier 50 (Selected Active Default) -->
-<div class="tier-card active-tier group relative cursor-pointer p-space-md rounded-xl bg-surface-container-highest shadow-xl flex flex-col justify-between gap-space-md" data-amount="50" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="tier-card active-tier group relative cursor-pointer p-space-md rounded-xl bg-surface-container-highest shadow-xl flex flex-col justify-between gap-space-md" onclick="selectTier(this, 50)"><div class="flex items-start justify-between gap-space-sm">
 <div class="flex items-center gap-space-sm">
 <div class="radio-indicator w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-[0_0_8px_rgba(255,198,101,0.8)]">
 <span class="radio-dot w-2.5 h-2.5 rounded-full bg-on-primary"></span>
@@ -192,7 +192,7 @@ Maximum voluntary stakes tier for high-intensity competition. Fully unlocks all 
 </div>
 <div class="flex items-center gap-space-xs bg-surface-container-highest px-space-md py-space-xs rounded-lg">
 <span class="font-stat-numeric text-stat-numeric text-primary">$</span>
-<input class="w-20 bg-transparent font-stat-numeric text-stat-numeric text-on-surface text-center focus:outline-none" id="custom-amount-input" max="500" min="0" type="number" step="0.01" inputmode="decimal" aria-label="Custom contribution in US dollars" value="50">
+<input class="w-20 bg-transparent font-stat-numeric text-stat-numeric text-on-surface text-center focus:outline-none" id="custom-amount-input" max="500" min="0" oninput="updateCustomStake(this.value)" type="number" value="50">
 <span class="font-label-caps text-label-caps text-outline uppercase">USD via payroll deduction</span>
 </div>
 </div>
@@ -300,7 +300,7 @@ Maximum voluntary stakes tier for high-intensity competition. Fully unlocks all 
           </button>
 </div>
 <!-- Submit Button -->
-<button class="w-full sm:w-auto flex items-center justify-center gap-space-sm px-space-xl py-space-sm rounded-full bg-gradient-to-r from-primary-container via-primary to-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-[0_0_24px_rgba(229,169,60,0.35)] hover:shadow-[0_0_32px_rgba(229,169,60,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all" id="btn-register" type="button">
+<button class="w-full sm:w-auto flex items-center justify-center gap-space-sm px-space-xl py-space-sm rounded-full bg-gradient-to-r from-primary-container via-primary to-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-[0_0_24px_rgba(229,169,60,0.35)] hover:shadow-[0_0_32px_rgba(229,169,60,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all" onclick="triggerRegistration()" type="button">
 <span class="">Complete Registration &amp; Enter Arena</span>
 <span class="text-[18px]">⚔️</span>
 </button>
@@ -308,101 +308,81 @@ Maximum voluntary stakes tier for high-intensity competition. Fully unlocks all 
 </div>
 </div>
 <script>
-    (function () {
-    'use strict';
-
-    const input = document.getElementById('custom-amount-input');
-    const cards = Array.from(document.querySelectorAll('.tier-card'));
-    const MIN = Number(input?.min || 0);
-    const MAX = Number(input?.max || 500);
-    const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-
-    // Trabalha em centavos inteiros para evitar erros de ponto flutuante
-    const toCents = (v) => Math.round(Number(v) * 100);
-    const fromCents = (c) => c / 100;
-
-    const CLS = {
-      cardOn: ['active-tier', 'bg-surface-container-highest', 'shadow-xl'],
-      cardOff: ['bg-surface-container-low'],
-      cardStale: ['bg-surface-container-high', 'shadow-md'],
-      titleOn: ['text-primary', 'font-bold'],
-      titleOff: ['text-on-surface'],
-      radioOn: ['bg-primary', 'shadow-[0_0_8px_rgba(255,198,101,0.8)]'],
-      radioOff: ['bg-surface-container-high'],
-      dotOn: ['bg-on-primary'],
-      dotOff: ['bg-transparent'],
-    };
-
-    function paint(card, active) {
-      card.classList.remove(...(active ? [...CLS.cardOff, ...CLS.cardStale] : [...CLS.cardOn, ...CLS.cardStale]));
-      card.classList.add(...(active ? CLS.cardOn : CLS.cardOff));
-      card.setAttribute('aria-checked', String(active));
-
-      const title = card.querySelector('h3');
-      title?.classList.remove(...(active ? CLS.titleOff : CLS.titleOn));
-      title?.classList.add(...(active ? CLS.titleOn : CLS.titleOff));
-
-      const radio = card.querySelector('.radio-indicator');
-      radio?.classList.remove(...(active ? CLS.radioOff : CLS.radioOn));
-      radio?.classList.add(...(active ? CLS.radioOn : CLS.radioOff));
-
-      const dot = card.querySelector('.radio-dot');
-      dot?.classList.remove(...(active ? CLS.dotOff : CLS.dotOn));
-      dot?.classList.add(...(active ? CLS.dotOn : CLS.dotOff));
-    }
-
-    // Ativa o card cujo valor é igual ao informado; se nenhum bater, desativa todos
-    function syncCards(amount) {
-      const cents = toCents(amount);
-      cards.forEach((card) => paint(card, Number.isFinite(cents) && cents === toCents(card.dataset.amount)));
-    }
-
-    // Retorna { ok, value, message } validando contra min/max e centavos
-    function readAmount() {
-      const raw = input.value.trim();
-      if (raw === '') return { ok: false, message: 'Enter a contribution amount.' };
-      const n = Number(raw);
-      if (!Number.isFinite(n)) return { ok: false, message: 'Enter a valid number.' };
-      if (n < MIN || n > MAX) return { ok: false, message: `Amount must be between ${money.format(MIN)} and ${money.format(MAX)}.` };
-      if (Math.abs(n * 100 - Math.round(n * 100)) > 1e-6) {
-        return { ok: false, message: 'Use at most two decimal places.' };
-      }
-      return { ok: true, value: fromCents(toCents(n)) };
-    }
-
-    function validateInput() {
-      const r = readAmount();
-      input.setCustomValidity(r.ok ? '' : r.message);
-      return r;
-    }
-
-    cards.forEach((card) => {
-      const choose = () => {
-        input.value = card.dataset.amount;
-        validateInput();
-        syncCards(card.dataset.amount);
-      };
-      card.addEventListener('click', choose);
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(); }
+    function selectTier(cardElement, amount) {
+      // Clear visual active state on cards
+      const cards = document.querySelectorAll('.tier-card');
+      cards.forEach(card => {
+        card.classList.remove('active-tier', 'bg-surface-container-highest', 'shadow-xl');
+        card.classList.add('bg-surface-container-low');
+        const title = card.querySelector('h3');
+        if (title) {
+          title.classList.remove('text-primary', 'font-bold');
+          title.classList.add('text-on-surface');
+        }
+        const radio = card.querySelector('.radio-indicator');
+        const dot = card.querySelector('.radio-dot');
+        if (radio) {
+          radio.classList.remove('bg-primary', 'shadow-[0_0_8px_rgba(255,198,101,0.8)]');
+          radio.classList.add('bg-surface-container-high');
+        }
+        if (dot) {
+          dot.classList.remove('bg-on-primary');
+          dot.classList.add('bg-transparent');
+        }
       });
-    });
 
-    input.addEventListener('input', () => {
-      const r = validateInput();
-      syncCards(r.ok ? r.value : NaN);
-    });
+      // Activate selected card
+      cardElement.classList.add('active-tier', 'bg-surface-container-highest', 'shadow-xl');
+      cardElement.classList.remove('bg-surface-container-low');
 
-    document.getElementById('btn-register')?.addEventListener('click', () => {
-      const r = validateInput();
-      if (!r.ok) { input.reportValidity(); input.focus(); return; }
-      alert(`Registration Confirmed! Selected Stake: ${money.format(r.value)} USD via payroll deduction. Welcome to the Staff Champions League Arena.`);
-    });
+      const title = cardElement.querySelector('h3');
+      if (title) {
+        title.classList.add('text-primary', 'font-bold');
+      }
 
-    // Estado inicial coerente com o valor do campo
-    const initial = validateInput();
-    syncCards(initial.ok ? initial.value : NaN);
-  })();
+      const radio = cardElement.querySelector('.radio-indicator');
+      const dot = cardElement.querySelector('.radio-dot');
+      if (radio) {
+        radio.classList.remove('bg-surface-container-high');
+        radio.classList.add('bg-primary', 'shadow-[0_0_8px_rgba(255,198,101,0.8)]');
+      }
+      if (dot) {
+        dot.classList.remove('bg-transparent');
+        dot.classList.add('bg-on-primary');
+      }
+
+      // Update input
+      const input = document.getElementById('custom-amount-input');
+      if (input) {
+        input.value = amount;
+      }
+    }
+
+    function updateCustomStake(val) {
+      const num = parseFloat(val) || 0;
+      // If matches predefined, toggle it
+      const cards = document.querySelectorAll('.tier-card');
+      cards.forEach(card => {
+        card.classList.remove('active-tier', 'bg-surface-container-highest', 'shadow-xl');
+        card.classList.add('bg-surface-container-low');
+        const radio = card.querySelector('.radio-indicator');
+        const dot = card.querySelector('.radio-dot');
+        if (radio) {
+          radio.classList.remove('bg-primary', 'shadow-[0_0_8px_rgba(255,198,101,0.8)]');
+          radio.classList.add('bg-surface-container-high');
+        }
+        if (dot) {
+          dot.classList.remove('bg-on-primary');
+          dot.classList.add('bg-transparent');
+        }
+      });
+    }
+
+    function triggerRegistration() {
+      const input = document.getElementById('custom-amount-input');
+      const stakeVal = input ? input.value : 50;
+      alert('Registration Confirmed! Selected Stake: $' + stakeVal + '.00 USD via payroll deduction. Welcome to the Staff Champions League Arena.');
+    }
   </script>
 </div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/20 py-space-xl mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin flex flex-col md:flex-row items-center justify-between gap-space-md text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-sm"><img alt="Tavernlight Crest" class="h-6 w-auto object-contain opacity-70" src="https://lh3.googleusercontent.com/aida/AEtjO1W05b4ZoAEmP9Nu1PCT1GnTqWQ6yj4a9L_eqMjCiWwwu6p8MUvukaUiQJAByASRlBJFoTlQ-grg2U9iyYx35QMIUViwZKxh9PnT3TksB-e5zMk4CyLnA8F5oJuTmFUOiEXr65YkyU0PA6UrZi7mGlEL3TOZwXWF60aT7l7JAmyceKuQyBtvgCpqN10Dg1gIilGw-c-NYLHE3fnE5GSpUsIO6C2wqQLFIBbom6fGJ_NtgVgsF-648cXvLA"><span class="font-headline-sm text-headline-sm text-on-surface">Tavernlight Studio</span><span class="text-outline">|</span><span class="">Internal Staff Champions League</span></div><div class="flex items-center gap-space-lg font-title-ui text-title-ui"><a class="hover:text-primary transition-colors" href="#">Schedule</a><a class="hover:text-primary transition-colors" href="#">Standings</a><a class="hover:text-primary transition-colors" href="#">FAQ</a></div><div class="text-outline text-right">© Tavernlight Studio. Competitive Guild Arena.</div></div></footer>
 
