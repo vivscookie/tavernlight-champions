@@ -38,7 +38,7 @@
 </span>
 </div>
 <div>
-<div class="font-display-hero text-headline-lg text-primary tracking-tight font-bold">$2,850<span class="text-headline-sm text-on-surface-variant font-normal">.00</span></div>
+<div id="pot-total" data-cents="285000" class="font-display-hero text-headline-lg text-primary tracking-tight font-bold">$2,850<span class="text-headline-sm text-on-surface-variant font-normal">.00</span></div>
 <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-1">
 <span class="text-secondary font-semibold">+18.5%</span> from Season 3 voluntary stakes
             </p>
@@ -361,7 +361,7 @@
 <div>
 <div class="flex items-center justify-between mb-space-sm">
 <div><span class="font-label-caps text-label-caps text-primary uppercase tracking-widest">Community Sharing Model</span><h3 class="font-headline-md text-headline-md text-on-surface">Voluntary Pot Sharing</h3></div>
-<div class="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-label-caps font-bold">
+<div id="allocation-badge" class="px-3 py-1 rounded-full bg-primary/10 text-primary font-label-caps text-label-caps font-bold">
                 Auto-Balanced (100%)
               </div>
 </div>
@@ -378,8 +378,8 @@
 <span class="text-primary font-bold text-headline-sm">1st</span>
 <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">military_tech</span>
 </div>
-<div class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$1,425<span class="text-body-sm font-normal text-outline">.00</span></div>
-<div class="font-label-caps text-label-caps text-primary mt-1 font-bold">50% OF TOTAL</div>
+<div data-card-amount="first" class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$1,425<span class="text-body-sm font-normal text-outline">.00</span></div>
+<div data-card-pct="first" class="font-label-caps text-label-caps text-primary mt-1 font-bold">50% OF TOTAL</div>
 </div>
 <div class="mt-space-md pt-2 border-t border-outline-variant/30 text-[11px] text-on-surface-variant font-body-sm leading-tight">
                   Championship Crown • Discord Guild Hall Trophy
@@ -392,8 +392,8 @@
 <span class="text-tertiary font-bold text-headline-sm">2nd</span>
 <span class="material-symbols-outlined text-tertiary text-[20px]">workspace_premium</span>
 </div>
-<div class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$855<span class="text-body-sm font-normal text-outline">.00</span></div>
-<div class="font-label-caps text-label-caps text-tertiary mt-1 font-bold">30% OF TOTAL</div>
+<div data-card-amount="second" class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$855<span class="text-body-sm font-normal text-outline">.00</span></div>
+<div data-card-pct="second" class="font-label-caps text-label-caps text-tertiary mt-1 font-bold">30% OF TOTAL</div>
 </div>
 <div class="mt-space-md pt-2 border-t border-outline-variant/30 text-[11px] text-on-surface-variant font-body-sm leading-tight">
                   Studio Runner-Up Silver Plaque • Custom Tag
@@ -406,8 +406,8 @@
 <span class="text-outline font-bold text-headline-sm">3rd</span>
 <span class="material-symbols-outlined text-outline text-[20px]">award_star</span>
 </div>
-<div class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$427<span class="text-body-sm font-normal text-outline">.50</span></div>
-<div class="font-label-caps text-label-caps text-outline mt-1 font-bold">15% OF TOTAL</div>
+<div data-card-amount="third" class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$427<span class="text-body-sm font-normal text-outline">.50</span></div>
+<div data-card-pct="third" class="font-label-caps text-label-caps text-outline mt-1 font-bold">15% OF TOTAL</div>
 </div>
 <div class="mt-space-md pt-2 border-t border-outline-variant/30 text-[11px] text-on-surface-variant font-body-sm leading-tight">
                   Podium Shield • Seasonal Bronze Crest
@@ -420,8 +420,8 @@
 <span class="text-secondary font-bold text-headline-sm">MVP</span>
 <span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
 </div>
-<div class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$142<span class="text-body-sm font-normal text-outline">.50</span></div>
-<div class="font-label-caps text-label-caps text-secondary mt-1 font-bold">5% COMMUNITY</div>
+<div data-card-amount="mvp" class="font-stat-numeric text-stat-numeric text-on-surface mt-space-xs font-bold">$142<span class="text-body-sm font-normal text-outline">.50</span></div>
+<div data-card-pct="mvp" class="font-label-caps text-label-caps text-secondary mt-1 font-bold">5% COMMUNITY</div>
 </div>
 <div class="mt-space-md pt-2 border-t border-outline-variant/30 text-[11px] text-on-surface-variant font-body-sm leading-tight">
                   Staff Choice Peer Award • Tavern Mug
@@ -434,33 +434,34 @@
 <!-- Slider 1: 1st Place -->
 <div class="flex flex-col gap-1">
 <div class="flex justify-between text-body-sm font-body-sm">
-<span class="text-on-surface font-medium">Champion Prize (Current: 50%)</span>
-<span class="text-primary font-bold font-stat-numeric text-[13px]">$1,425.00</span>
+<span class="text-on-surface font-medium" data-slider-label="first">Champion Prize (Current: 50%)</span>
+<span class="text-primary font-bold font-stat-numeric text-[13px]" data-slider-amount="first">$1,425.00</span>
 </div>
 <div class="relative w-full flex items-center">
-<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" id="firstPlaceSlider" max="70" min="30" type="range" value="50">
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" id="firstPlaceSlider" data-place="first" aria-label="Champion prize share, percent" max="70" min="30" step="1" type="range" value="50">
 </div>
 </div>
 <!-- Slider 2: 2nd Place -->
 <div class="flex flex-col gap-1">
 <div class="flex justify-between text-body-sm font-body-sm">
-<span class="text-on-surface font-medium">Runner-Up Prize (Current: 30%)</span>
-<span class="text-tertiary font-bold font-stat-numeric text-[13px]">$855.00</span>
+<span class="text-on-surface font-medium" data-slider-label="second">Runner-Up Prize (Current: 30%)</span>
+<span class="text-tertiary font-bold font-stat-numeric text-[13px]" data-slider-amount="second">$855.00</span>
 </div>
 <div class="relative w-full flex items-center">
-<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-tertiary" max="40" min="15" type="range" value="30">
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-tertiary" id="secondPlaceSlider" data-place="second" aria-label="Runner-up prize share, percent" max="40" min="15" step="1" type="range" value="30">
 </div>
 </div>
 <!-- Slider 3: 3rd Place -->
 <div class="flex flex-col gap-1">
 <div class="flex justify-between text-body-sm font-body-sm">
-<span class="text-on-surface font-medium">Third Place (Current: 15%)</span>
-<span class="text-outline font-bold font-stat-numeric text-[13px]">$427.50</span>
+<span class="text-on-surface font-medium" data-slider-label="third">Third Place (Current: 15%)</span>
+<span class="text-outline font-bold font-stat-numeric text-[13px]" data-slider-amount="third">$427.50</span>
 </div>
 <div class="relative w-full flex items-center">
-<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-outline" max="25" min="5" type="range" value="15">
+<input class="w-full h-1.5 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-outline" id="thirdPlaceSlider" data-place="third" aria-label="Third place share, percent" max="25" min="5" step="1" type="range" value="15">
 </div>
 </div>
+<p id="allocation-note" role="status" aria-live="polite" class="font-body-sm text-body-sm text-tertiary min-h-[1.25rem]"></p>
 </div>
 <!-- Governance Toggles -->
 <div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm p-space-sm rounded-lg bg-surface-container-high/50"><label class="flex items-center gap-space-xs cursor-pointer select-none"><input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary bg-surface-container" type="checkbox"><span class="font-body-sm text-body-sm text-on-surface">Community rules &amp; fair play guidelines</span></label><label class="flex items-center gap-space-xs cursor-pointer select-none"><input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary bg-surface-container" type="checkbox"><span class="font-body-sm text-body-sm text-on-surface">Include celebratory physical guild badge</span></label></div>
@@ -571,4 +572,82 @@
 
 
 
+<script>
+(function () {
+  'use strict';
+
+  const MVP_MIN_PCT = 5;                       // fatia mínima reservada ao MVP (resto automático)
+  const potEl = document.getElementById('pot-total');
+  const noteEl = document.getElementById('allocation-note');
+  const badgeEl = document.getElementById('allocation-badge');
+  const TOTAL_CENTS = parseInt(potEl.dataset.cents, 10);
+
+  const LABELS = { first: 'Champion Prize', second: 'Runner-Up Prize', third: 'Third Place' };
+  const sliders = {};
+  document.querySelectorAll('input[data-place]').forEach((el) => { sliders[el.dataset.place] = el; });
+  const places = Object.keys(sliders);
+
+  const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  const split = (cents) => { const [d, c] = usd.format(cents / 100).split('.'); return [d, '.' + c]; };
+
+  const sumOthers = (except) => places.reduce((t, k) => (k === except ? t : t + Number(sliders[k].value)), 0);
+
+  // Impede que a soma das fatias ajustáveis ultrapasse (100 - MVP_MIN_PCT)
+  function enforceBudget(changedKey) {
+    const el = sliders[changedKey];
+    const maxAllowed = 100 - MVP_MIN_PCT - sumOthers(changedKey);
+    const wanted = Number(el.value);
+    if (wanted > maxAllowed) {
+      el.value = Math.max(Number(el.min), maxAllowed);
+      return `The total can't exceed ${100 - MVP_MIN_PCT}% — the remaining ${MVP_MIN_PCT}% is reserved for the MVP award.`;
+    }
+    return '';
+  }
+
+  function render() {
+    const pct = {};
+    places.forEach((k) => { pct[k] = Number(sliders[k].value); });
+    pct.mvp = 100 - places.reduce((t, k) => t + pct[k], 0);
+
+    // Valores em centavos inteiros; o MVP recebe o resto, então a soma fecha exatamente no total
+    const cents = {};
+    places.forEach((k) => { cents[k] = Math.round((TOTAL_CENTS * pct[k]) / 100); });
+    cents.mvp = TOTAL_CENTS - places.reduce((t, k) => t + cents[k], 0);
+
+    [...places, 'mvp'].forEach((k) => {
+      const box = document.querySelector(`[data-card-amount="${k}"]`);
+      if (box) {
+        const [dollars, decimals] = split(cents[k]);
+        box.firstChild.nodeValue = dollars;
+        const dec = box.querySelector('span');
+        if (dec) dec.textContent = decimals;
+      }
+      const pctEl = document.querySelector(`[data-card-pct="${k}"]`);
+      if (pctEl) pctEl.textContent = k === 'mvp' ? `${pct[k]}% COMMUNITY` : `${pct[k]}% OF TOTAL`;
+    });
+
+    places.forEach((k) => {
+      const label = document.querySelector(`[data-slider-label="${k}"]`);
+      if (label) label.textContent = `${LABELS[k]} (Current: ${pct[k]}%)`;
+      const amt = document.querySelector(`[data-slider-amount="${k}"]`);
+      if (amt) amt.textContent = usd.format(cents[k] / 100);
+      sliders[k].setAttribute('aria-valuetext', `${pct[k]}% — ${usd.format(cents[k] / 100)}`);
+    });
+
+    const total = pct.first + pct.second + pct.third + pct.mvp;
+    badgeEl.textContent = `Auto-Balanced (${total}%)`;
+  }
+
+  places.forEach((k) => {
+    sliders[k].addEventListener('input', () => {
+      noteEl.textContent = enforceBudget(k);
+      render();
+    });
+  });
+
+  // Ajusta o estado inicial caso o HTML venha com valores inconsistentes
+  places.forEach((k) => { enforceBudget(k); });
+  render();
+})();
+</script>
 </body></html>

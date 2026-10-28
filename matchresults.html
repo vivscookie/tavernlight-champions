@@ -80,15 +80,15 @@
 </div>
 <!-- Center Scoreboard Dial -->
 <div class="flex flex-col items-center justify-center shrink-0 px-space-lg py-space-sm bg-surface-container-lowest/80 rounded-xl shadow-inner min-w-[220px]">
-<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest mb-1">BO3 Series Result</span>
+<span id="series-format" data-best-of="3" class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest mb-1">BO3 Series Result</span>
 <div class="flex items-center gap-space-md font-stat-numeric text-stat-numeric">
-<span class="text-4xl md:text-5xl font-bold text-primary font-stat-numeric" id="teamA_seriesScore">2</span>
+<span class="text-4xl md:text-5xl font-bold text-primary font-stat-numeric" id="teamA_seriesScore" aria-label="Ironforge Knights series score">2</span>
 <span class="text-outline-variant font-headline-md">:</span>
-<span class="text-4xl md:text-5xl font-bold text-on-surface-variant font-stat-numeric" id="teamB_seriesScore">1</span>
+<span class="text-4xl md:text-5xl font-bold text-on-surface-variant font-stat-numeric" id="teamB_seriesScore" aria-label="Ravencrest Syndicate series score">1</span>
 </div>
 <div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-body-sm text-body-sm">
 <span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
-<span class="">Finalized (Map 3 Decided)</span>
+<span id="series-status" role="status" aria-live="polite" class="">Finalized (Map 3 Decided)</span>
 </div>
 </div>
 <!-- Team B: Ravencrest Syndicate -->
@@ -149,9 +149,9 @@
 <span class="font-body-sm text-body-sm text-on-surface-variant">T: 9 • CT: 4</span>
 </div>
 <div class="flex items-center gap-1.5">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map1_a', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map1_a" type="number" value="13">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map1_a', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ironforge Knights rounds, map 1" data-target="map1_a" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map1_a" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ironforge Knights rounds, map 1" value="13">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ironforge Knights rounds, map 1" data-target="map1_a" data-adjust="1" type="button">+</button>
 </div>
 </div>
 <!-- VS Badge -->
@@ -162,9 +162,9 @@
 <!-- Team B Map Rounds -->
 <div class="sm:col-span-4 flex items-center justify-between">
 <div class="flex items-center gap-1.5 order-2 sm:order-1">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map1_b', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map1_b" type="number" value="9">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map1_b', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ravencrest Syndicate rounds, map 1" data-target="map1_b" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map1_b" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ravencrest Syndicate rounds, map 1" value="9">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ravencrest Syndicate rounds, map 1" data-target="map1_b" data-adjust="1" type="button">+</button>
 </div>
 <div class="flex flex-col text-right order-1 sm:order-2">
 <span class="font-title-ui text-title-ui font-bold text-on-surface">Ravencrest Syndicate</span>
@@ -207,9 +207,9 @@
 <span class="font-body-sm text-body-sm text-on-surface-variant">CT: 7 • T: 4 • OT: 0</span>
 </div>
 <div class="flex items-center gap-1.5">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map2_a', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map2_a" type="number" value="11">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map2_a', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ironforge Knights rounds, map 2" data-target="map2_a" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map2_a" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ironforge Knights rounds, map 2" value="11">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ironforge Knights rounds, map 2" data-target="map2_a" data-adjust="1" type="button">+</button>
 </div>
 </div>
 <!-- VS Badge -->
@@ -220,9 +220,9 @@
 <!-- Team B Map Rounds -->
 <div class="sm:col-span-4 flex items-center justify-between">
 <div class="flex items-center gap-1.5 order-2 sm:order-1">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map2_b', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map2_b" type="number" value="13">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map2_b', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ravencrest Syndicate rounds, map 2" data-target="map2_b" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map2_b" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ravencrest Syndicate rounds, map 2" value="13">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ravencrest Syndicate rounds, map 2" data-target="map2_b" data-adjust="1" type="button">+</button>
 </div>
 <div class="flex flex-col text-right order-1 sm:order-2">
 <span class="font-title-ui text-title-ui font-bold text-primary">Ravencrest Syndicate</span>
@@ -265,9 +265,9 @@
 <span class="font-body-sm text-body-sm text-on-surface-variant">CT: 8 • T: 5</span>
 </div>
 <div class="flex items-center gap-1.5">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map3_a', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map3_a" type="number" value="13">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map3_a', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ironforge Knights rounds, map 3" data-target="map3_a" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-primary font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map3_a" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ironforge Knights rounds, map 3" value="13">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ironforge Knights rounds, map 3" data-target="map3_a" data-adjust="1" type="button">+</button>
 </div>
 </div>
 <!-- VS Badge -->
@@ -278,9 +278,9 @@
 <!-- Team B Map Rounds -->
 <div class="sm:col-span-4 flex items-center justify-between">
 <div class="flex items-center gap-1.5 order-2 sm:order-1">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map3_b', -1)" type="button">-</button>
-<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map3_b" type="number" value="8">
-<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" onclick="adjustRound('map3_b', 1)" type="button">+</button>
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Decrease Ravencrest Syndicate rounds, map 3" data-target="map3_b" data-adjust="-1" type="button">-</button>
+<input class="w-12 text-center bg-surface-container-highest text-on-surface font-stat-numeric text-stat-numeric rounded py-1 focus:outline-none focus:ring-1 focus:ring-primary" id="map3_b" type="number" min="0" max="99" step="1" inputmode="numeric" aria-label="Ravencrest Syndicate rounds, map 3" value="8">
+<button class="w-7 h-7 rounded bg-surface-container text-on-surface hover:text-primary flex items-center justify-center font-bold text-lg leading-none" aria-label="Increase Ravencrest Syndicate rounds, map 3" data-target="map3_b" data-adjust="1" type="button">+</button>
 </div>
 <div class="flex flex-col text-right order-1 sm:order-2">
 <span class="font-title-ui text-title-ui font-bold text-on-surface">Ravencrest Syndicate</span>
@@ -455,7 +455,7 @@
 <button class="px-space-md py-2.5 rounded-full font-title-ui text-title-ui bg-surface-container text-on-surface hover:bg-surface-bright transition-colors shadow" type="button">
           Save Draft
         </button>
-<button class="flex items-center gap-2 px-space-lg py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" onclick="handleMatchSubmit()" type="button">
+<button class="flex items-center gap-2 px-space-lg py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-lg shadow-primary-container/20 hover:brightness-110 active:scale-95 transition-all" id="btn-submit-match" type="button">
 <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">publish</span>
 <span class="">Submit &amp; Publish Results</span>
 </button>
@@ -464,39 +464,117 @@
 </div>
 </div>
 <script>
-  function adjustRound(inputId, change) {
-    const input = document.getElementById(inputId);
-    if (!input) return;
-    let current = parseInt(input.value, 10) || 0;
-    current = Math.max(0, current + change);
-    input.value = current;
-    recalculateSeriesScore();
-  }
+  (function () {
+    'use strict';
 
-  function recalculateSeriesScore() {
-    const m1_a = parseInt(document.getElementById('map1_a')?.value || 0, 10);
-    const m1_b = parseInt(document.getElementById('map1_b')?.value || 0, 10);
-    const m2_a = parseInt(document.getElementById('map2_a')?.value || 0, 10);
-    const m2_b = parseInt(document.getElementById('map2_b')?.value || 0, 10);
-    const m3_a = parseInt(document.getElementById('map3_a')?.value || 0, 10);
-    const m3_b = parseInt(document.getElementById('map3_b')?.value || 0, 10);
+    const MAX_ROUNDS = 99;
+    const bestOf = Number(document.getElementById('series-format')?.dataset.bestOf) || 3;
+    const winsNeeded = Math.floor(bestOf / 2) + 1;
 
-    let winsA = 0;
-    let winsB = 0;
+    // Descobre os mapas pelo DOM (map1_a/map1_b, map2_a/map2_b…): nada fixo em "3 mapas"
+    const maps = Array.from(document.querySelectorAll('input[id^="map"][id$="_a"]'))
+      .map((a) => {
+        const n = Number(a.id.match(/^map(\d+)_a$/)[1]);
+        return { n, a, b: document.getElementById(`map${n}_b`) };
+      })
+      .filter((m) => m.b)
+      .sort((x, y) => x.n - y.n);
 
-    if (m1_a > m1_b) winsA++; else if (m1_b > m1_a) winsB++;
-    if (m2_a > m2_b) winsA++; else if (m2_b > m2_a) winsB++;
-    if (m3_a > m3_b) winsA++; else if (m3_b > m3_a) winsB++;
+    const scoreAEl = document.getElementById('teamA_seriesScore');
+    const scoreBEl = document.getElementById('teamB_seriesScore');
+    const statusEl = document.getElementById('series-status');
+    const submitBtn = document.getElementById('btn-submit-match');
 
-    const teamAScoreEl = document.getElementById('teamA_seriesScore');
-    const teamBScoreEl = document.getElementById('teamB_seriesScore');
-    if (teamAScoreEl) teamAScoreEl.textContent = winsA;
-    if (teamBScoreEl) teamBScoreEl.textContent = winsB;
-  }
+    // Retorna inteiro entre 0 e MAX_ROUNDS, ou NaN se vazio/inválido
+    function readRounds(input) {
+      const raw = input.value.trim();
+      if (!/^\d+$/.test(raw)) return NaN;
+      const n = Number(raw);
+      return n <= MAX_ROUNDS ? n : NaN;
+    }
 
-  function handleMatchSubmit() {
-    alert("Match #14 Results submitted and published to the Tavernlight Champions League official standings!");
-  }
+    // Regra da série, mapa a mapa e em ordem
+    function evaluate() {
+      let winsA = 0;
+      let winsB = 0;
+      let decidedAt = null;
+      let firstEmpty = null;
+      const issues = [];
+
+      for (const m of maps) {
+        const a = readRounds(m.a);
+        const b = readRounds(m.b);
+
+        if (Number.isNaN(a) || Number.isNaN(b)) {
+          issues.push({ input: Number.isNaN(a) ? m.a : m.b, msg: `Map ${m.n}: enter whole numbers from 0 to ${MAX_ROUNDS}.` });
+          continue;
+        }
+        const played = a > 0 || b > 0;
+
+        if (decidedAt !== null) {
+          // Série já decidida: mapas seguintes não podem ter placar
+          if (played) issues.push({ input: m.a, msg: `Map ${m.n} can't have a score: the series was already decided on Map ${decidedAt}.` });
+          continue;
+        }
+        if (!played) { if (firstEmpty === null) firstEmpty = m.n; continue; }
+        if (firstEmpty !== null) {
+          issues.push({ input: m.a, msg: `Map ${firstEmpty} has no score, but Map ${m.n} does.` });
+          continue;
+        }
+        if (a === b) {
+          issues.push({ input: m.a, msg: `Map ${m.n} is tied ${a}–${b}: enter the final score, including overtime.` });
+          continue;
+        }
+
+        if (a > b) winsA++; else winsB++;
+        if (winsA >= winsNeeded || winsB >= winsNeeded) decidedAt = m.n;
+      }
+      return { winsA, winsB, decidedAt, issues, valid: issues.length === 0 && decidedAt !== null };
+    }
+
+    function render() {
+      const r = evaluate();
+      scoreAEl.textContent = r.winsA;
+      scoreBEl.textContent = r.winsB;
+
+      let text;
+      if (r.issues.length) text = r.issues[0].msg;
+      else if (r.decidedAt !== null) text = `Finalized (Map ${r.decidedAt} Decided)`;
+      else text = `In progress — first to ${winsNeeded} map wins`;
+
+      statusEl.textContent = text;
+      statusEl.classList.toggle('text-error', r.issues.length > 0);
+      return r;
+    }
+
+    function adjustRound(input, change) {
+      const current = readRounds(input);
+      const base = Number.isNaN(current) ? 0 : current;
+      input.value = Math.min(MAX_ROUNDS, Math.max(0, base + change));
+      render();
+    }
+
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-adjust]');
+      if (!btn) return;
+      const input = document.getElementById(btn.dataset.target);
+      if (input) adjustRound(input, Number(btn.dataset.adjust));
+    });
+
+    maps.forEach((m) => [m.a, m.b].forEach((el) => el.addEventListener('input', render)));
+
+    submitBtn?.addEventListener('click', () => {
+      const r = render();
+      if (!r.valid) {
+        // Foca o campo com problema (ou o próximo mapa pendente) em vez de publicar
+        (r.issues[0]?.input || maps.find((m) => !(readRounds(m.a) > 0 || readRounds(m.b) > 0))?.a)?.focus();
+        return;
+      }
+      alert(`Match #14 results submitted: ${r.winsA}–${r.winsB}. Published to the Tavernlight Champions League official standings!`);
+    });
+
+    render();
+  })();
 </script></main><footer class="w-full bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-[1440px] mx-auto px-margin py-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-md font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="tournaments-calendar" href="#">Schedule</a><span class="text-outline-variant font-body-sm">•</span><a class="hover:text-primary transition-colors" data-path="standings" href="#">Standings</a><span class="text-outline-variant font-body-sm">•</span><a class="hover:text-primary transition-colors" data-path="community-chat" href="#">Community Chat</a></div><p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-right">© Tavernlight Studio. Competitive Guild Arena.</p></div></footer>
 
 
