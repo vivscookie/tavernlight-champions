@@ -9,6 +9,8 @@ npm install
 npm run assets:fetch   # uma vez: baixa as imagens para public/img (versione a pasta)
 npm run dev            # http://localhost:5173 (API simulada no navegador)
 npm run build          # gera dist/ (HTML + CSS/JS com hash); API em modo live
+npm run build:vercel   # build como a Vercel faz (base "/", modo demo por padrão)
+npm run preview:vercel # serve dist/ com os cabeçalhos do vercel.json e a página 404 (http://localhost:4173)
 npm test               # formatadores, contrato do cliente (HTTP real), regras do backend de referência e build sem mock
 ```
 
@@ -75,6 +77,52 @@ O contrato está em `docs/api-contract.md` (e `docs/openapi.yaml`). O front fala
   `<meta name="csrf-token">`), usa timeout de 15 s e traduz o `code` do erro em mensagem para o usuário (`describeError`).
 - `scripts/mock-server.mjs` aplica **todas** as regras do contrato; o backend real deve passar no mesmo `tests/api.contract.test.mjs`
   (aponte `VITE_API_BASE_URL` ao seu servidor) antes de ir para produção.
+
+## Deploy na Vercel
+
+O projeto já está pronto para importar na Vercel: **New Project → Import** o repositório. O `vercel.json` define tudo
+(framework Vite, `npm ci`, comando de build, pasta `dist`, cabeçalhos de segurança e cache); não é preciso configurar nada na tela.
+
+**1. O primeiro deploy sai em MODO DEMO (de propósito).** Ainda não existe backend, e na Vercel `/api/*` responderia 404, o que quebraria
+todas as telas. Então, sem nenhuma variável definida, o build usa a API simulada: dados de exemplo no navegador, uma faixa
+**"Demo mode · sample data, nothing is saved"** em todas as páginas, e nada é gravado. Serve para validar a interface e mostrar ao time;
+**não use como produção real**.
+
+**2. Quando o backend existir**, três passos:
+
+1. Aponte `/api` para ele, acrescentando ao `vercel.json` (o navegador continua falando só com a própria origem):
+   ```json
+   "rewrites": [{ "source": "/api/:path*", "destination": "https://api.suaempresa.com/api/:path*" }]
+   ```
+2. Em *Project Settings → Environment Variables*, crie `VITE_API_MODE = live` (ambiente *Production*; deixe *Preview* sem a variável se quiser previews em demo).
+3. Faça um novo deploy. A faixa de demo, o backend de referência e os fixtures **não entram** no bundle live (`npm run test:build` garante).
+
+| Variável | Onde | Efeito |
+|---|---|---|
+| `VITE_API_MODE` | Vercel (projeto) | `mock` (padrão se ausente) ou `live`. Lida no **build**: mudar exige novo deploy |
+| `VITE_BASE` | `vercel.json` | `/` no deploy (necessário para a página 404 em URLs profundas); `./` nos outros casos |
+| `VITE_API_BASE_URL` | opcional | padrão `/api` (mesma origem) |
+
+**Cabeçalhos aplicados a todas as páginas** (`vercel.json`):
+
+| Cabeçalho | Para quê |
+|---|---|
+| `Content-Security-Policy` | `script-src 'self'` (sem inline, sem `eval`); estilos só do site e do Google Fonts (`style-src-attr 'unsafe-inline'` cobre os `style="…"`); `connect-src 'self'` (a API tem de ser da mesma origem, por isso o *rewrite*); `frame-ancestors 'none'`; `form-action`/`base-uri` `'self'` |
+| `X-Frame-Options`, `X-Content-Type-Options` | contra clickjacking e *MIME sniffing* |
+| `Referrer-Policy`, `Permissions-Policy` | não vaza URL completa; sem câmera, microfone, localização |
+| `Strict-Transport-Security` | HTTPS por 2 anos, **sem** `preload` (compromisso difícil de desfazer) |
+| `X-Robots-Tag` + `robots.txt` + `<meta robots>` | ferramenta interna: não indexar |
+| `Cache-Control` | `/assets/*` (nome com hash) 1 ano `immutable`; `/img/*` 1 dia |
+
+- **`img-src https:` é largo de propósito**: fotos e brasões vêm da API (`avatarUrl`, `crestUrl`) e hoje também de `googleusercontent.com`.
+  Depois de rodar `npm run assets:fetch` e fixar o CDN de avatares, troque por hosts específicos.
+- Se a API ficar em **outro domínio** sem *rewrite*, será preciso acrescentá-lo ao `connect-src`.
+- **Proteja o site**: é interno. Ative *Deployment Protection* (Vercel Authentication ou senha) em Production e Preview em *Project Settings → Deployment Protection*.
+  O login da empresa (SSO) é do backend, não deste front.
+
+**Antes de publicar:** `npm test` (inclui `test:deploy`: 2 builds reais, CSP confrontada com o que sai, servidor estilo Vercel) e
+`npm run build:vercel && npm run preview:vercel` para ver o resultado em http://localhost:4173.
+Limite do teste: não há navegador no pipeline, então a CSP é verificada por análise do build, não executada; abra o preview e olhe o console.
 
 ## Dados da API nas telas
 
@@ -175,6 +223,11 @@ ferramentas de build/dev server (Vite 5 → esbuild, Tailwind 3 → braces/micro
 - Regra de escalação a confirmar: hoje um reserva pode estar numa escalação (ex.: `sub_sam` no LoL) e só **sair do time** esvazia o slot.
 - O contador do `index` ainda usa lógica própria; pode passar a usar `js/ui/countdown.js` (já usado em `teammanager`).
 - Links do rodapé "Standings" e "Community Chat" (as páginas não existem); abas de filtro de `poolsettings`/`teammanager` sem ação.
+
+**Deploy**
+- Sem backend, o deploy é só **demonstração**. Falta: o backend, o `rewrite` de `/api`, `VITE_API_MODE=live` e a proteção de acesso (SSO/senha).
+- Imagens ainda remotas até `npm run assets:fetch` (e a CSP `img-src https:` precisa ser apertada depois).
+- Não foi feito um deploy real nem rodado Lighthouse/axe: só o `dist/` foi validado localmente.
 
 **Backend e operação**
 - **O backend ainda não existe.** Falta implementar o contrato (`docs/api-contract.md`): validação de placar/valores/pote, unicidade do

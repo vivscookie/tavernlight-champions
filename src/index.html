@@ -1,0 +1,727 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Dashboard" description="Next match, live events and the studio tournament calendar."></include>
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active="dashboard"></include><main id="main-content" tabindex="-1" class=" w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Atmospheric Glow & Hero Summary -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest" id="hero" aria-busy="true">
+<!-- Atmospheric Ambient Lighting -->
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[380px] bg-gradient-to-b from-primary/15 via-secondary/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 right-10 w-96 h-96 bg-primary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="max-w-[1440px] mx-auto px-margin pt-space-lg pb-space-xl">
+<div id="dashboard-error" role="alert" hidden class="mb-space-md p-space-md rounded-xl bg-error-container text-on-error-container flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm"><span class="font-body-md text-body-md" id="dashboard-error-message">We couldn\'t load your dashboard.</span><button type="button" id="dashboard-retry" class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-title-ui text-title-ui">Try again</button></div>
+<!-- Player Welcome & Quick Metric Ribbon -->
+<div class="flex flex-col xl:flex-row items-start xl:items-end justify-between gap-space-lg pb-space-lg">
+<div class="flex flex-col space-y-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">{{site.brand.name}} • <span data-text="season.name">—</span></span>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-surface-container-high text-on-surface-variant">INTERNAL LEAGUE</span>
+</div>
+<h1 class="font-display-hero text-display-hero text-on-surface tracking-tight">
+            Welcome back, <span class="italic text-primary font-headline-lg font-normal" data-text="user.displayName">—</span>.
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base">verified</span>
+<span class="">Discord identity linked: <strong class="text-on-surface" data-text="user.handle">—</strong> (<span data-text="user.guild">—</span>)</span>
+</p>
+</div>
+<!-- Player Quick Stat Matrix -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm w-full xl:w-auto">
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-md min-w-[140px]">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Overall Standings</span>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<span class="font-stat-numeric text-stat-numeric text-primary" data-text="standing.rank|rank">—</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ <span data-text="standing.total">—</span> staff</span>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-md min-w-[140px]">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Trophy Points</span>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<span class="font-stat-numeric text-stat-numeric text-secondary" data-text="standing.points">—</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">PTS</span>
+</div>
+</div>
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-md min-w-[140px]">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Prize Pool Share</span>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<span class="font-stat-numeric text-stat-numeric text-on-surface" data-text="prizeShare.amountCents|moneyCompact">—</span>
+<span class="font-body-sm text-body-sm text-primary">+<span data-text="prizeShare.vaultBonusPct">—</span>% vault</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-space-md rounded-lg flex flex-col justify-between shadow-md min-w-[160px] relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-12 h-12 rounded-full bg-secondary/10 blur-sm"></div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">timer</span> Next Match
+            </span>
+<div class="flex items-baseline gap-space-xs mt-space-xs">
+<span class="font-stat-numeric text-stat-numeric text-primary-fixed" id="countdown-badge" role="timer">--h --m --s</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="hero-bestof">BO<span data-text="nextMatch.bestOf">—</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Guild Ritual Progress Banner (Inspiration Mirror) -->
+<div class="relative w-full rounded-xl overflow-hidden bg-surface-container-high shadow-xl p-space-lg flex flex-col lg:flex-row items-center justify-between gap-space-lg" aria-hidden="true" style="background-image: radial-gradient(circle at 50% 50%, rgba(229,169,60,0.12) 0%, rgba(20,19,18,0.92) 100%), url('img:bg-d32083');">
+<div class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-[2px]"></div>
+<div class="relative z-10 flex items-center gap-space-md max-w-xl">
+<div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center shrink-0 text-primary shadow-[0_0_15px_rgba(255,198,101,0.3)]">
+<span class="material-symbols-outlined text-2xl">shield</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">The Guild Conquest Circuit</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Tavernlight Staff Champions Cup 2026</span>
+</div>
+</div>
+<!-- 1 Predict -> 2 Watch -> 3 Claim Sequence -->
+<div class="relative z-10 flex flex-wrap items-center justify-center gap-space-md sm:gap-space-lg font-title-ui text-title-ui">
+<div class="flex items-center gap-space-xs group">
+<span class="font-headline-lg text-headline-lg italic text-secondary leading-none">1</span>
+<span class="text-on-surface tracking-wider uppercase text-xs">PREDICT</span>
+</div>
+<span class="text-primary/60 text-lg">→</span>
+<div class="flex items-center gap-space-xs group">
+<span class="font-headline-lg text-headline-lg italic text-secondary leading-none">2</span>
+<span class="text-on-surface tracking-wider uppercase text-xs">FIGHT / WATCH</span>
+</div>
+<span class="text-primary/60 text-lg">→</span>
+<div class="flex items-center gap-space-xs group">
+<span class="font-headline-lg text-headline-lg italic text-primary leading-none">3</span>
+<span class="text-on-surface tracking-wider uppercase text-xs">CLAIM THE TOP</span>
+</div>
+<a class="px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-md hover:bg-primary transition-all duration-200 ml-space-sm flex items-center gap-space-xs" href="#schedule-section">
+<span class="">View Match Schedule</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<div class="max-w-[1440px] mx-auto px-margin py-space-xl w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left & Center Column (8 Cols): Matches, Games & Team Rosters -->
+<div class="lg:col-span-8 flex flex-col space-y-space-xl min-w-0">
+<!-- SECTION: PRIORITY NEXT MATCH (IMMERSIVE CARD) -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-xl relative overflow-hidden" id="next-match-card" hidden>
+<!-- Golden ambient wash & ember flare -->
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_10px_rgba(233,195,73,0.9)] animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase" data-text="fixtureLabel">UPCOMING LIVE FIXTURE</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-high px-space-sm py-1 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm">schedule</span>
+<span class="font-body-sm text-body-sm text-on-surface font-semibold" id="live-timer" role="timer">Loading kickoff time…</span>
+</div>
+</div>
+<!-- Match Versus Arena -->
+<div class="grid grid-cols-1 md:grid-cols-9 gap-space-md items-center py-space-md">
+<!-- Team A (My Team) -->
+<div class="md:col-span-4 bg-surface-container-low p-space-md rounded-lg flex items-center justify-between shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 shadow-lg relative">
+<img class="w-full h-full rounded-full object-cover" alt="" data-src="mine.crestSrc">
+<span class="font-title-ui text-title-ui text-secondary" data-text="mine.initials" data-role="initials-mine" aria-hidden="true"></span>
+<span class="absolute -bottom-1 -right-1 text-xs bg-primary text-on-primary rounded-full px-1 font-bold" data-text="mine.seed|seed">—</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate" data-text="mine.name">—</span>
+<span class="material-symbols-outlined text-secondary text-sm" title="Your team">star</span>
+</div>
+<span class="font-body-sm text-body-sm text-primary">Your Team • <span data-text="nextMatch.round">—</span></span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-stat-numeric text-stat-numeric text-primary" data-text="mine.recordText">—</span>
+<span class="block font-label-caps text-[10px] text-outline">SEASON W/L</span>
+</div>
+</div>
+<!-- VS Badge & Format -->
+<div class="md:col-span-1 flex flex-col items-center justify-center text-center py-space-xs">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-headline-sm text-headline-sm italic text-secondary shadow-inner">
+              VS
+            </div>
+<span class="font-label-caps text-[10px] text-outline mt-1 uppercase">BO<span data-text="nextMatch.bestOf">—</span> <span data-text="nextMatch.stage|upper">—</span></span>
+</div>
+<!-- Team B (Opponent) -->
+<div class="md:col-span-4 bg-surface-container-low p-space-md rounded-lg flex items-center justify-between shadow-md">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 shadow-lg relative">
+<img class="w-full h-full rounded-full object-cover" alt="" data-src="opponent.crestSrc">
+<span class="font-title-ui text-title-ui text-outline" data-text="opponent.initials" data-role="initials-opponent" aria-hidden="true"></span>
+<span class="absolute -bottom-1 -right-1 text-xs bg-surface-container-highest text-on-surface rounded-full px-1 font-bold" data-text="opponent.seed|seed">—</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate" data-text="opponent.name">—</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" data-text="opponent.division">—</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-stat-numeric text-stat-numeric text-on-surface-variant" data-text="opponent.recordText">—</span>
+<span class="block font-label-caps text-[10px] text-outline">SEASON W/L</span>
+</div>
+</div>
+</div>
+<!-- Telemetry & Match Launch Controls -->
+<div class="mt-space-md pt-space-md bg-surface-container-low/70 rounded-lg p-space-md flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-md text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base">map</span>
+<span class="">Map Pool: <strong class="text-on-surface" data-text="mapPoolText">—</strong></span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base">how_to_reg</span>
+<span class="group/rd" data-attr="data-state:readinessState">Roster: <strong class="text-on-surface group-data-[state=incomplete]/rd:text-error" data-text="readinessText">—</strong></span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<a class="px-space-md py-space-xs rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui flex items-center gap-space-xs shadow transition-colors" id="voice-link" target="_blank" rel="noopener noreferrer" data-attr="href:nextMatch.voice.url">
+<span class="material-symbols-outlined text-secondary text-base">volume_up</span>
+<span data-text="nextMatch.voice.label">Voice</span><span class="sr-only"> (opens in a new tab)</span>
+</a>
+<button type="button" class="px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-md hover:bg-primary transition-all flex items-center gap-space-xs disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-primary-container" disabled title="Coming soon">
+<span class="material-symbols-outlined text-base">swords</span>
+<span class="">Lobby Check-In</span><span class="sr-only"> (coming soon)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SECTION: REGISTERED GAMES (COMPETITIVE ROSTER) -->
+<div class="flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-xl">sports_esports</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Competitive Roster</h2>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">4 Games Enrolled</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Game 1: CS2 -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md hover:bg-surface-container-high transition-all flex flex-col justify-between space-y-space-md group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-primary shadow">
+                  CS2
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Counter-Strike 2</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Role: Rifler / Entry Fragger</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-primary-container/20 text-primary">ACTIVE</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm">military_tech</span> Tier: Premier 16.4k
+              </span>
+<span class="text-on-surface font-semibold">Team: Ravencrest</span>
+</div>
+</div>
+<!-- Game 2: League of Legends -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md hover:bg-surface-container-high transition-all flex flex-col justify-between space-y-space-md group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-secondary shadow">
+                  LoL
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">League of Legends</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Role: Midlane / Mage Specialist</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-secondary/15 text-secondary">ACTIVE</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-sm">token</span> Tier: Platinum II
+              </span>
+<span class="text-on-surface font-semibold">Pending Guild</span>
+</div>
+</div>
+<!-- Game 3: Smash Bros Ultimate -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md hover:bg-surface-container-high transition-all flex flex-col justify-between space-y-space-md group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-primary-fixed shadow">
+                  SSB
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Smash Bros. Ultimate</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Main: Fox / Secondary: Wolf</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-surface-container-high text-on-surface-variant">SOLO</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-sm">stars</span> Rank: Elite Smash (13.8M)
+              </span>
+<span class="text-on-surface font-semibold">1v1 Bracket</span>
+</div>
+</div>
+<!-- Game 4: Street Fighter 6 -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md hover:bg-surface-container-high transition-all flex flex-col justify-between space-y-space-md group">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest flex items-center justify-center font-bold text-tertiary shadow">
+                  SF6
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Street Fighter 6</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Main: Cammy (Classic Controls)</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-surface-container-high text-on-surface-variant">SUBSTITUTE</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-sm">workspace_premium</span> Tier: Diamond 3
+              </span>
+<span class="text-on-surface font-semibold">Reserve Pool</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION: TEAMS & PENDING REQUESTS -->
+<div class="flex flex-col space-y-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-xl">diversity_3</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Teams &amp; Affiliations</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<button type="button" class="px-space-md py-1.5 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-title-ui text-title-ui transition-colors">Browse Teams</button>
+<button type="button" class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow hover:bg-primary transition-colors">+ Form New Team</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Active Team: Ravencrest -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-xl">shield</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Ravencrest Guild</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">CS2 5v5 Division • Captain: @alex_d</p>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-primary-container/20 text-primary">OFFICIAL ROSTER</span>
+</div>
+<!-- Roster Avatars -->
+<div class="mt-space-md pt-space-sm bg-surface-container-lowest/60 rounded-lg p-space-sm">
+<span class="font-label-caps text-[10px] text-outline uppercase block mb-1">Active Squad (5/5)</span>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-surface-bright flex items-center justify-center text-xs font-bold text-primary ring-2 ring-surface-container" title="alex_d (Captain)">👑</div>
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold ring-2 ring-surface-container" title="vivs (You)">V</div>
+<div class="w-8 h-8 rounded-full bg-surface-bright text-on-surface flex items-center justify-center text-xs font-bold ring-2 ring-surface-container">M</div>
+<div class="w-8 h-8 rounded-full bg-surface-bright text-on-surface flex items-center justify-center text-xs font-bold ring-2 ring-surface-container">K</div>
+<div class="w-8 h-8 rounded-full bg-surface-bright text-on-surface flex items-center justify-center text-xs font-bold ring-2 ring-surface-container">S</div>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">85.7% Win Rate</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs">
+<span class="text-on-surface-variant">Next match tonight vs Ironforge</span>
+<a class="text-primary hover:underline font-title-ui text-title-ui" href="teammanager.html">Manage Roster →</a>
+</div>
+</div>
+<!-- Pending Team Request: Dragonmaw Raiders -->
+<div class="bg-surface-container p-space-md rounded-xl shadow-md flex flex-col justify-between space-y-space-md">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-outline flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-xl">local_fire_department</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Dragonmaw Raiders</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">League of Legends • Captain: @kragthor</p>
+</div>
+</div>
+<div class="flex items-center gap-1 px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-secondary-container/30 text-secondary animate-pulse">
+<span class="">PENDING APPROVAL</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm bg-surface-container-lowest/60 rounded-lg p-space-sm text-body-sm font-body-sm">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="">Position Requested:</span>
+<span class="text-on-surface font-semibold">Starting Midlaner</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant mt-1">
+<span class="">Submitted:</span>
+<span class="text-outline">Applied 2 days ago</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-space-xs">
+<span class="text-outline text-xs">Waiting for Captain response</span>
+<button type="button" class="text-error hover:underline font-title-ui text-xs">Cancel Request</button>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION: UPCOMING MATCHES QUEUE -->
+<div class="flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-xl">event_upcoming</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Scheduled Matches</h2>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">3 Fixtures Upcoming</span>
+</div>
+<div class="bg-surface-container rounded-xl shadow-md overflow-hidden">
+<div class="divide-y divide-surface-container-high">
+<!-- Match Row 1 -->
+<div class="p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm hover:bg-surface-container-high/60 transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center font-title-ui text-secondary shrink-0">
+                  CS2
+                </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Ravencrest vs Ironforge</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-label-caps bg-primary/20 text-primary">TONIGHT</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Studio Cup Knockout • BO3 • Best of Three</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg sm:text-right">
+<div class="flex flex-col">
+<span class="font-title-ui text-title-ui text-primary">19:30 EST</span>
+<span class="font-body-sm text-body-sm text-outline">Discord #Arena-1</span>
+</div>
+<button type="button" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-colors">
+                  Details
+                </button>
+</div>
+</div>
+<!-- Match Row 2 -->
+<div class="p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm hover:bg-surface-container-high/60 transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center font-title-ui text-primary-fixed shrink-0">
+                  SSB
+                </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">vivs (Fox) vs DanK (Kazuya)</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Friday Casual Smash Brawl • Quarterfinals</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg sm:text-right">
+<div class="flex flex-col">
+<span class="font-title-ui text-title-ui text-on-surface">Tomorrow 16:00</span>
+<span class="font-body-sm text-body-sm text-outline">Lounge Switch A</span>
+</div>
+<button type="button" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-colors">
+                  Details
+                </button>
+</div>
+</div>
+<!-- Match Row 3 -->
+<div class="p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm hover:bg-surface-container-high/60 transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center font-title-ui text-tertiary shrink-0">
+                  VAL
+                </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Game Design vs Client Dev</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Valorant Department Showdown • Group Stage</span>
+</div>
+</div>
+<div class="flex items-center gap-space-lg sm:text-right">
+<div class="flex flex-col">
+<span class="font-title-ui text-title-ui text-on-surface">Mon Nov 18 • 18:00</span>
+<span class="font-body-sm text-body-sm text-outline">Server NA-East</span>
+</div>
+<button type="button" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-colors">
+                  Details
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION: STUDIO CALENDAR & ALL EVENTS -->
+<div class="flex flex-col space-y-space-md pt-space-md" id="schedule-section" aria-busy="true">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">Studio Schedule</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Tournaments &amp; All-Company Battles</h2>
+</div>
+<!-- Interactive Filter Chips -->
+<div class="flex flex-wrap items-center gap-space-xs p-1 bg-surface-container rounded-full" id="calendar-filter-bar">
+<button type="button" class="cal-filter px-space-md py-1 rounded-full text-xs font-title-ui text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all aria-pressed:bg-primary-container aria-pressed:text-on-primary-container aria-pressed:font-bold aria-pressed:shadow aria-pressed:hover:bg-primary-container aria-pressed:hover:text-on-primary-container" data-filter="all" aria-pressed="true">All Studio Games</button>
+<button type="button" class="cal-filter px-space-md py-1 rounded-full text-xs font-title-ui text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all aria-pressed:bg-primary-container aria-pressed:text-on-primary-container aria-pressed:font-bold aria-pressed:shadow aria-pressed:hover:bg-primary-container aria-pressed:hover:text-on-primary-container" data-filter="mine" aria-pressed="false">My Matches Only</button>
+<button type="button" class="cal-filter px-space-md py-1 rounded-full text-xs font-title-ui text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all aria-pressed:bg-primary-container aria-pressed:text-on-primary-container aria-pressed:font-bold aria-pressed:shadow aria-pressed:hover:bg-primary-container aria-pressed:hover:text-on-primary-container" data-filter="live" aria-pressed="false">Spectate Live</button>
+<button type="button" class="cal-filter px-space-md py-1 rounded-full text-xs font-title-ui text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all aria-pressed:bg-primary-container aria-pressed:text-on-primary-container aria-pressed:font-bold aria-pressed:shadow aria-pressed:hover:bg-primary-container aria-pressed:hover:text-on-primary-container" data-filter="prizes" aria-pressed="false">Prize Pool Events</button>
+</div>
+</div>
+<!-- Schedule Items -->
+<p id="calendar-count" class="sr-only" role="status"></p>
+<p id="calendar-loading" class="font-body-md text-body-md text-on-surface-variant">Loading events…</p>
+<div id="calendar-error" role="alert" hidden class="p-space-md rounded-xl bg-error-container text-on-error-container flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<span class="font-body-md text-body-md" id="calendar-error-message">We couldn't load the calendar.</span>
+<button type="button" id="calendar-retry" class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-title-ui text-title-ui">Try again</button>
+</div>
+<ul class="grid grid-cols-1 gap-space-sm" id="calendar-event-list"></ul>
+<p id="calendar-empty" hidden class="p-space-md rounded-xl bg-surface-container text-on-surface-variant font-body-md text-body-md text-center"></p>
+</div>
+</div>
+<!-- Right Sidebar Column (4 Cols): Podium, Standings & Tournament Telemetry (Inspiration Mirror) -->
+<div class="lg:col-span-4 flex flex-col space-y-space-xl">
+<!-- PRIZE TIERS ACCORDION / SHOWCASE (Referenced from inspiration) -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-xl flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base">emoji_events</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">SEASON BOUNTIES</span>
+</div>
+<span class="font-body-sm text-[11px] text-outline uppercase">WHAT'S AT STAKE</span>
+</div>
+<!-- 1st Prize Hero Card -->
+<div class="relative bg-surface-container-high rounded-lg p-space-md overflow-hidden shadow-lg" aria-hidden="true" style="background-image: radial-gradient(circle at 80% 50%, rgba(229,169,60,0.2) 0%, rgba(33,31,30,0.95) 100%), url('img:bg-b19c4e');">
+<div class="absolute inset-0 bg-surface-container-high/85"></div>
+<div class="relative z-10 flex flex-col space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md italic font-bold text-primary">1ST PLACE</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-caps font-bold bg-primary text-on-primary">TOP PRIZE</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface font-semibold">"Prophet of the Pitch" Custom LED Sign</p>
+<ul class="font-body-sm text-body-sm text-on-surface-variant space-y-0.5 pt-1">
+<li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Exclusive Discord Mythic Role &amp; Golden Tag</li>
+<li class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> $200 Amazon Gift Card + Studio Crest Ring</li>
+</ul>
+</div>
+</div>
+<!-- 2nd & 3rd Place Mini-Cards -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div>
+<span class="font-headline-sm text-headline-sm italic text-secondary font-bold">2ND</span>
+<span class="block font-label-caps text-[9px] text-outline uppercase">RUNNER-UP</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-2 font-medium">$150 Amazon Gift Card</p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col justify-between">
+<div>
+<span class="font-headline-sm text-headline-sm italic text-tertiary font-bold">3RD</span>
+<span class="block font-label-caps text-[9px] text-outline uppercase">THIRD PLACE</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-2 font-medium">$100 Amazon Gift Card</p>
+</div>
+</div>
+</div>
+<!-- PODIUM TOP 3 (Mirrored from User's Reference Layout) -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-xl flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base">military_tech</span>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-wider">CURRENT CHAMPIONS</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline uppercase">WEEK 6</span>
+</div>
+<div class="grid grid-cols-3 gap-space-xs items-end pt-space-sm text-center">
+<!-- 2nd Place: Shikate -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col items-center shadow">
+<span class="font-label-caps text-[10px] text-outline">2ND</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center my-space-xs font-headline-sm text-secondary font-bold shadow">
+              S
+            </div>
+<span class="font-title-ui text-title-ui text-on-surface truncate w-full">Shikate</span>
+<div class="flex items-baseline justify-center gap-0.5 mt-1">
+<span class="font-stat-numeric text-stat-numeric text-secondary leading-none">177</span>
+<span class="font-label-caps text-[9px] text-outline">PTS</span>
+</div>
+</div>
+<!-- 1st Place: Yuuma (Elevated) -->
+<div class="bg-surface-container-high p-space-md rounded-lg flex flex-col items-center shadow-2xl relative -mt-3">
+<span class="material-symbols-outlined text-secondary text-base">crown</span>
+<span class="font-label-caps text-[10px] text-secondary font-bold">1ST</span>
+<div class="w-12 h-12 rounded-full bg-secondary-container/50 flex items-center justify-center my-space-xs font-headline-md text-primary font-bold shadow-md">
+              Y
+            </div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate w-full">Yuuma</span>
+<div class="flex items-baseline justify-center gap-0.5 mt-1">
+<span class="font-stat-numeric text-stat-numeric text-primary font-bold leading-none">190</span>
+<span class="font-label-caps text-[9px] text-primary">PTS</span>
+</div>
+</div>
+<!-- 3rd Place: JGG -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col items-center shadow">
+<span class="font-label-caps text-[10px] text-outline">3RD</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center my-space-xs font-headline-sm text-tertiary font-bold shadow">
+              J
+            </div>
+<span class="font-title-ui text-title-ui text-on-surface truncate w-full">JGG</span>
+<div class="flex items-baseline justify-center gap-0.5 mt-1">
+<span class="font-stat-numeric text-stat-numeric text-tertiary leading-none">176</span>
+<span class="font-label-caps text-[9px] text-outline">PTS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- LIVE STANDINGS LEADERBOARD TABLE (Exact Styling from reference image) -->
+<div class="bg-surface-container rounded-xl shadow-xl overflow-hidden flex flex-col">
+<div class="p-space-md bg-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-base">format_list_numbered</span>
+<span class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider">STANDINGS</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-caps bg-secondary/20 text-secondary font-bold">LIVE STANDINGS</span>
+</div>
+<div class="divide-y divide-surface-container-high font-body-sm text-body-sm">
+<!-- Row 1: Yuuma -->
+<div class="p-space-sm px-space-md flex items-center justify-between hover:bg-surface-container-high/50 transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="font-stat-numeric text-xs text-outline w-5 text-center">01</span>
+<div class="w-7 h-7 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center text-xs font-bold">Y</div>
+<span class="font-title-ui text-title-ui text-on-surface">Yuuma</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-xs text-[11px] text-outline">
+<span class="">58 <strong class="font-normal text-on-surface-variant">GRP</strong></span>
+<span class="">99 <strong class="font-normal text-on-surface-variant">KO</strong></span>
+</div>
+<span class="font-stat-numeric text-stat-numeric text-primary font-bold w-12 text-right">190</span>
+</div>
+</div>
+<!-- Row 2: Shikate -->
+<div class="p-space-sm px-space-md flex items-center justify-between hover:bg-surface-container-high/50 transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="font-stat-numeric text-xs text-outline w-5 text-center">02</span>
+<div class="w-7 h-7 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center text-xs font-bold">S</div>
+<span class="font-title-ui text-title-ui text-on-surface">Shikate</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-xs text-[11px] text-outline">
+<span class="">67 <strong class="font-normal text-on-surface-variant">GRP</strong></span>
+<span class="">95 <strong class="font-normal text-on-surface-variant">KO</strong></span>
+</div>
+<span class="font-stat-numeric text-stat-numeric text-secondary font-bold w-12 text-right">177</span>
+</div>
+</div>
+<!-- Row 3: JGG -->
+<div class="p-space-sm px-space-md flex items-center justify-between hover:bg-surface-container-high/50 transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="font-stat-numeric text-xs text-outline w-5 text-center">03</span>
+<div class="w-7 h-7 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center text-xs font-bold">J</div>
+<span class="font-title-ui text-title-ui text-on-surface">JGG</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-xs text-[11px] text-outline">
+<span class="">59 <strong class="font-normal text-on-surface-variant">GRP</strong></span>
+<span class="">92 <strong class="font-normal text-on-surface-variant">KO</strong></span>
+</div>
+<span class="font-stat-numeric text-stat-numeric text-secondary font-bold w-12 text-right">176</span>
+</div>
+</div>
+<!-- Row 4: You (Vivs) - HIGHLIGHTED ROW -->
+<div class="p-space-sm px-space-md flex items-center justify-between bg-primary-container/15 transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="font-stat-numeric text-xs text-primary font-bold w-5 text-center">04</span>
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold shadow">V</div>
+<div class="flex items-center gap-1">
+<span class="font-title-ui text-title-ui text-primary font-bold">vivs</span>
+<span class="text-[10px] font-label-caps px-1 rounded bg-primary/20 text-primary">YOU</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-xs text-[11px] text-primary/80">
+<span class="">71 <strong class="font-normal text-on-surface-variant">GRP</strong></span>
+<span class="">105 <strong class="font-normal text-on-surface-variant">KO</strong></span>
+</div>
+<span class="font-stat-numeric text-stat-numeric text-primary font-bold w-12 text-right">176</span>
+</div>
+</div>
+<!-- Row 5: willzeragw -->
+<div class="p-space-sm px-space-md flex items-center justify-between hover:bg-surface-container-high/50 transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="font-stat-numeric text-xs text-outline w-5 text-center">05</span>
+<div class="w-7 h-7 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center text-xs font-bold">W</div>
+<span class="font-title-ui text-title-ui text-on-surface-variant">willzeragw</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex items-center gap-space-xs text-[11px] text-outline">
+<span class="">51 <strong class="font-normal text-on-surface-variant">GRP</strong></span>
+<span class="">90 <strong class="font-normal text-on-surface-variant">KO</strong></span>
+</div>
+<span class="font-stat-numeric text-stat-numeric text-on-surface font-semibold w-12 text-right">168</span>
+</div>
+</div>
+</div>
+<span class="p-space-sm bg-surface-container-high/60 text-center font-title-ui text-xs text-primary transition-colors cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon">
+          View Complete 31-Player Guild Ladder →
+        <span class="sr-only"> (coming soon)</span></span>
+</div>
+<!-- RULES & SCORING RUNES (Mirrored reference format) -->
+<div class="bg-surface-container rounded-xl p-space-md shadow-xl flex flex-col space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-base">rule</span>
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">POINTS SYSTEM</span>
+</div>
+
+</div>
+<div class="space-y-space-sm text-body-sm font-body-sm">
+<div class="flex items-center justify-between py-1 border-b border-surface-container-high">
+<span class="text-on-surface-variant">Round of 16 Victory</span>
+<span class="font-stat-numeric text-stat-numeric text-secondary text-sm">4 PTS</span>
+</div>
+<div class="flex items-center justify-between py-1 border-b border-surface-container-high">
+<span class="text-on-surface-variant">Quarter-final Decider</span>
+<span class="font-stat-numeric text-stat-numeric text-secondary text-sm">6 PTS</span>
+</div>
+<div class="flex items-center justify-between py-1 border-b border-surface-container-high">
+<span class="text-on-surface-variant">Semi-final Triumph</span>
+<span class="font-stat-numeric text-stat-numeric text-primary text-sm">9 PTS</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="text-on-surface-variant">Grand Championship Crown</span>
+<span class="font-stat-numeric text-stat-numeric text-primary font-bold text-sm">18 PTS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<template id="tpl-event">
+<li class="event-item group/ev bg-surface-container p-space-md rounded-xl shadow-md hover:bg-surface-container-high transition-all flex flex-col md:flex-row md:items-center justify-between gap-space-md border-l-4 border-l-transparent data-[status=live]:border-l-primary data-[status=live_soon]:border-l-primary" data-attr="data-event-id:id;data-status:status;data-today:isToday">
+<div class="flex items-start md:items-center gap-space-md">
+<div class="flex flex-col items-center justify-center w-14 h-14 rounded-lg bg-surface-container-lowest text-center shrink-0">
+<span class="font-label-caps text-[10px] uppercase font-bold text-outline group-data-[today=true]/ev:text-primary" data-text="dayLabel"></span>
+<span class="font-stat-numeric text-stat-numeric text-on-surface leading-none" data-text="dayNumber"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-on-surface" data-text="title"></span>
+<span data-if="isLive" class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-error/20 text-error">LIVE NOW</span>
+<span data-if="isSoon" class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-secondary/20 text-secondary">LIVE SOON</span>
+<span data-if="prizeLabel" class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-primary/20 text-primary" data-text="prizeLabel"></span>
+<span data-if="category" class="px-space-xs py-0.5 rounded text-[10px] font-label-caps font-bold bg-surface-container-high text-on-surface-variant" data-text="category"></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5" data-text="descriptionLine"></p>
+</div>
+</div>
+<div class="flex items-center gap-space-md self-end md:self-center">
+<span class="font-stat-numeric text-stat-numeric text-on-surface group-data-[status=live]/ev:text-primary group-data-[status=live_soon]/ev:text-primary" data-text="startsAt|clock"></span>
+<a data-if="isSpectate" class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary-container font-title-ui text-title-ui font-bold hover:bg-primary transition-all" target="_blank" rel="noopener noreferrer" data-attr="href:action.url">Spectate Link<span class="sr-only"> for <span data-text="title"></span> (opens in a new tab)</span></a>
+<button data-if="isRsvp" type="button" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-all" data-action="rsvp" data-attr="data-event-id:id"><span data-text="rsvpLabel"></span><span class="sr-only"> for <span data-text="title"></span></span></button>
+<a data-if="isLinkAction" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-all" data-attr="href:action.url"><span data-text="actionLabel"></span><span class="sr-only"> for <span data-text="title"></span></span></a>
+<span data-if="isPendingAction" aria-disabled="true" title="Coming soon" class="px-space-md py-1.5 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui transition-all opacity-60 cursor-not-allowed"><span data-text="actionLabel"></span><span class="sr-only"> for <span data-text="title"></span> (coming soon)</span></span>
+</div>
+</li>
+</template>
+</main><include src="partials/footer.html"></include>
+
+
+
+<script type="module" src="/js/pages/index.js"></script>
+</body></html>

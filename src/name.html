@@ -1,0 +1,137 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Staff Onboarding: Identity" description="Register your screen name and department for the staff league."></include>
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active="staff-onboarding"></include><main id="main-content" tabindex="-1" class=" w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Atmospheric Guild Hall Backdrop with subtle glow -->
+<div class="relative w-full overflow-hidden pb-space-xl">
+<!-- Ambient Radial Gold Highlights -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[840px] h-[340px] bg-gradient-to-b from-primary/10 via-primary-container/5 to-transparent blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute -top-24 right-1/4 w-[360px] h-[360px] bg-secondary-container/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="max-w-[896px] mx-auto px-margin-mobile sm:px-margin pt-space-lg sm:pt-space-xl flex flex-col gap-space-lg">
+<!-- Step Progress Stepper Bar -->
+<include src="partials/stepper.html" current="1"></include>
+<!-- Main Card Surface with Decorative Tavern Visual Vignette -->
+<section class="relative w-full rounded-xl bg-surface-container-low shadow-2xl overflow-hidden">
+<!-- Subtle Top Filigree Banner Header Image -->
+<div class="relative w-full h-44 sm:h-52 overflow-hidden bg-surface-container-lowest">
+<img alt="Tavernlight Staff League War Room" class="w-full h-full object-cover object-center opacity-40 brightness-75 contrast-125 scale-105" src="img:banner-war-room">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/70 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low via-transparent to-surface-container-low"></div>
+<!-- Section Label & Atmospheric Pill inside the image banner -->
+<div class="absolute bottom-4 left-6 sm:left-10 right-6 flex items-end justify-between">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-primary tracking-[0.25em] uppercase flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1; font-size: 16px;">shield_with_heart</span>
+                Phase 01 // Guild Inscription
+              </span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">1. Identity &amp; Department</h1>
+</div>
+<div class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container/90 backdrop-blur-md shadow-md">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(255,198,101,0.8)]"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">{{site.season.name}}</span>
+</div>
+</div>
+</div>
+<!-- Form Inner Canvas -->
+<div class="p-6 sm:p-10 flex flex-col gap-space-xl">
+<!-- Descriptive Subtitle Prompt -->
+<div class="bg-surface-container p-space-md rounded-lg flex items-start gap-space-md shadow-inner">
+<span class="material-symbols-outlined text-secondary mt-0.5" style="font-size: 22px;">info</span>
+<div class="flex flex-col gap-space-xs">
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+                Enter your in-game screen name and company department to register for the Tavernlight Staff League.
+              </p>
+<p class="font-body-sm text-body-sm text-outline">Your combat handle will appear in match schedules and team rosters, while department placement fuels division bragging rights.</p>
+</div>
+</div>
+<!-- Fields Container -->
+<form class="flex flex-col gap-space-lg" id="onboarding-form" novalidate="" data-next="team.html">
+<!-- Input 1: Screen Name / Gamertag -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-title-ui text-title-ui text-on-surface tracking-wider uppercase flex items-center gap-space-xs" for="gamertag">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">sports_esports</span>
+                  Screen Name / Gamertag
+                  <span class="text-secondary font-bold">*</span>
+</label>
+<span class="font-body-sm text-body-sm text-outline">Publicly visible across tournament brackets</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-size: 20px;">badge</span>
+</div>
+<input class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface placeholder:text-on-surface-variant/80 pl-12 pr-4 py-3.5 rounded-lg font-body-lg text-body-lg focus:bg-surface-container-high transition-all shadow-inner" id="gamertag" name="gamertag" placeholder="e.g. ShadowVivi or vivi99" type="text" required="" minlength="3" maxlength="16" pattern="[A-Za-z0-9_\-]{3,16}" autocomplete="nickname" autocapitalize="off" spellcheck="false" aria-describedby="gamertag-help gamertag-error">
+</div>
+<p id="gamertag-help" class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-space-xs pt-1">
+<span class="material-symbols-outlined text-tertiary" style="font-size: 14px;">verified_user</span>
+                Allowed characters: letters, numerals, underscores, and dashes (3–16 chars).
+              </p>
+<p id="gamertag-error" role="alert" class="font-body-sm text-body-sm text-error min-h-[1.25rem]"></p>
+</div>
+<!-- Input 2: Company Department Selection -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-title-ui text-title-ui text-on-surface tracking-wider uppercase flex items-center gap-space-xs" for="department">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">corporate_fare</span>
+                  Company Department
+                  <span class="text-secondary font-bold">*</span>
+</label>
+<span class="font-label-caps text-label-caps text-tertiary uppercase">Staff Cohort</span>
+</div>
+<!-- Custom Select / Dropdown Control -->
+<div class="relative flex items-center">
+<div class="absolute left-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-size: 20px;">account_tree</span>
+</div>
+<select class="w-full bg-surface-container-highest/60 hover:bg-surface-container-highest text-on-surface pl-12 pr-10 py-3.5 rounded-lg font-body-lg text-body-lg focus:bg-surface-container-high transition-all appearance-none cursor-pointer shadow-inner" id="department" name="department" required="">
+<option class="bg-surface-container-high text-on-surface-variant" disabled="" value="">Select your studio branch...</option>
+<!-- demais opções: src/data/departments.json -->
+</select>
+<div class="absolute right-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined" style="font-size: 22px;">expand_more</span>
+</div>
+</div>
+<!-- Studio Clarification Note (Requested) -->
+<div class="mt-2 p-3 bg-surface-container-lowest/60 rounded-md flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-size: 18px;">military_tech</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  No studio role needed—department affiliation is used for inter-department brackets and bragging rights.
+                </span>
+</div>
+</div>
+<!-- Inter-Department Rivalry Preview Chips -->
+<div class="pt-space-xs flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-widest">Active Studio Brackets in Session</span>
+<div class="flex flex-wrap gap-2 pt-1" id="department-brackets"><!-- src/data/departments.json --></div>
+</div>
+</form>
+</div>
+<!-- Bottom Action Bar / Navigation Dock -->
+<div class="w-full bg-surface-container p-6 sm:px-10 flex flex-col-reverse sm:flex-row items-center justify-between gap-space-md shadow-lg">
+<!-- Save Draft Action -->
+<button class="w-full sm:w-auto px-space-lg py-3 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui uppercase tracking-wider flex items-center justify-center gap-space-xs transition-colors shadow-sm" id="btn-save-draft" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">save</span>
+            Save Draft
+          </button>
+<!-- Primary Flow Action -->
+<button class="w-full sm:w-auto px-space-xl py-3.5 rounded-full bg-gradient-to-r from-primary to-primary-container hover:from-primary-fixed-dim hover:to-primary text-on-primary font-title-ui text-title-ui uppercase tracking-wider flex items-center justify-center gap-space-sm shadow-[0_0_20px_rgba(229,169,60,0.35)] hover:shadow-[0_0_28px_rgba(255,198,101,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0" id="btn-continue" type="submit" form="onboarding-form">
+<span class="">Continue to Step 2: Squad Selection</span>
+<span class="material-symbols-outlined" style="font-size: 20px;">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Reassurance Guild Footer Micro-Notice -->
+<div class="flex items-center justify-center gap-space-sm py-space-xs text-outline font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-secondary" style="font-size: 16px;">lock_clock</span>
+<span id="autosave-status" role="status" aria-live="polite">Registration progress autosaves automatically every 30 seconds.</span>
+</div>
+</div>
+</div>
+</div>
+</main><include src="partials/footer.html"></include>
+
+
+
+
+
+<script type="module" src="/js/pages/name.js"></script>
+</body></html>

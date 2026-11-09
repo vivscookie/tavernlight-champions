@@ -1,0 +1,9 @@
+{
+  "defaultId": "ironforge",
+  "squads": [
+    { "id": "ironforge", "name": "Ironforge Devs", "captain": "@lead_be", "members": 3, "capacity": 5 },
+    { "id": "dragonmaw", "name": "Dragonmaw Raiders", "captain": "@art_director", "members": 4, "capacity": 5 },
+    { "id": "pixel", "name": "Pixel Vanguard", "captain": "@ux_lead", "members": 2, "capacity": 5 },
+    { "id": "infra", "name": "Void Runners / SRE", "captain": "@devops_ninja", "members": 4, "capacity": 5 }
+  ]
+}

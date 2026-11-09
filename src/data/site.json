@@ -1,0 +1,79 @@
+{
+  "brand": {
+    "name": "Tavernlight Champions League",
+    "studio": "Tavernlight Studio",
+    "tagline": "Internal Staff Champions League",
+    "copyright": "© Tavernlight Studio. Competitive Guild Arena."
+  },
+  "season": {
+    "id": "autumn-split",
+    "name": "Autumn Split 2026",
+    "year": 2026
+  },
+  "user": {
+    "handle": "vivi#0001",
+    "role": "Staff Competitor"
+  },
+  "nav": [
+    {
+      "id": "dashboard",
+      "label": "Home",
+      "href": "index.html"
+    },
+    {
+      "id": "tournaments-calendar",
+      "label": "Tournaments & Calendar",
+      "href": "index.html#schedule-section"
+    },
+    {
+      "id": "teams",
+      "label": "Teams",
+      "href": "teammanager.html"
+    },
+    {
+      "id": "staff-onboarding",
+      "label": "Staff Onboarding",
+      "href": "name.html"
+    }
+  ],
+  "footerLinks": [
+    {
+      "label": "Schedule",
+      "href": "index.html#schedule-section"
+    },
+    {
+      "label": "Standings",
+      "href": null
+    },
+    {
+      "label": "Community Chat",
+      "href": null
+    }
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "label": "Identity",
+      "title": "Identity & Department",
+      "href": "name.html"
+    },
+    {
+      "n": 2,
+      "label": "Squad",
+      "title": "Team Selection",
+      "href": "team.html"
+    },
+    {
+      "n": 3,
+      "label": "Games",
+      "title": "Games & Disciplines",
+      "href": "enlisting.html"
+    },
+    {
+      "n": 4,
+      "label": "Stakes",
+      "title": "Prize Pool Stakes",
+      "href": "prizepool.html"
+    }
+  ]
+}

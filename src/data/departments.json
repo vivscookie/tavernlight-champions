@@ -1,0 +1,17 @@
+{
+  "options": [
+    { "value": "game_design", "label": "Game Design" },
+    { "value": "frontend_engineering", "label": "Frontend Engineering" },
+    { "value": "backend_infrastructure", "label": "Backend & Infrastructure" },
+    { "value": "art_animation", "label": "Art & Animation" },
+    { "value": "qa_playtesting", "label": "QA & Playtesting" },
+    { "value": "product_operations", "label": "Product & Operations" },
+    { "value": "community_marketing", "label": "Community & Marketing" }
+  ],
+  "defaultValue": "frontend_engineering",
+  "brackets": [
+    { "label": "Engineering", "enrolled": 14, "tone": "secondary" },
+    { "label": "Game Design", "enrolled": 9, "tone": "tertiary" },
+    { "label": "Art & QA", "enrolled": 11, "tone": "outline" }
+  ]
+}

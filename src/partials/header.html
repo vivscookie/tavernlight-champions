@@ -1,0 +1,17 @@
+<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-space-sm focus:left-space-sm focus:z-[100] focus:px-space-md focus:py-space-sm focus:rounded-full focus:bg-primary-container focus:text-on-primary-container focus:font-title-ui focus:text-title-ui">Skip to main content</a>
+<header class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/30 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+<div class="h-20 max-w-[1440px] mx-auto px-margin flex items-center justify-between gap-gutter">
+<a class="flex items-center gap-space-md" href="index.html"><img alt="" class="h-8 w-auto object-contain" src="img:crest" width="32" height="32"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-semibold">{{site.brand.name}}</span></div></a>
+<nav aria-label="Main" class="hidden lg:flex items-center gap-space-sm p-space-xs bg-surface-container-low/80 rounded-full border border-outline-variant/30">{{{nav}}}</nav>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-sm pl-space-xs border-l border-outline-variant/30">
+<div class="hidden md:flex flex-col text-right"><span class="font-title-ui text-title-ui text-on-surface leading-none">{{site.user.handle}}</span><span class="font-label-caps text-label-caps text-primary leading-none mt-1">{{site.user.role}}</span></div>
+<div class="relative p-0.5 rounded-full ring-1 ring-primary/40"><img alt="" class="w-8 h-8 rounded-full object-cover" src="img:avatar-user" width="32" height="32"><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-secondary border-2 border-surface-container" aria-hidden="true"></span></div>
+</div>
+<button type="button" id="mobile-nav-toggle" class="lg:hidden p-2 rounded-full text-on-surface hover:bg-surface-container-high transition-colors" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open main menu"><span class="material-symbols-outlined">menu</span></button>
+</div>
+</div>
+<nav id="mobile-nav" aria-label="Main" hidden class="lg:hidden border-t border-outline-variant/30 bg-surface/95 backdrop-blur-xl px-margin py-space-sm">
+<ul class="flex flex-col gap-space-xs max-w-[1440px] mx-auto">{{{navMobile}}}</ul>
+</nav>
+</header>

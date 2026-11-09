@@ -1,0 +1,182 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Staff Onboarding: Squad" description="Join, found or find a studio squad."></include>
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active="staff-onboarding"></include><main id="main-content" tabindex="-1" class=" w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Ambient Atmospheric Radiant Glows -->
+<div class="relative w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin py-space-xl overflow-hidden">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-b from-primary/10 via-secondary/5 to-transparent blur-3xl pointer-events-none rounded-full"></div>
+<div class="absolute top-1/3 -left-48 w-96 h-96 bg-primary-container/5 blur-[100px] pointer-events-none rounded-full"></div>
+<div class="absolute top-2/3 -right-48 w-96 h-96 bg-secondary-container/5 blur-[100px] pointer-events-none rounded-full"></div>
+<div class="relative max-w-4xl mx-auto flex flex-col gap-space-xl">
+<include src="partials/stepper.html" current="2"></include>
+<!-- Main Hub Card -->
+<section class="w-full bg-surface-container rounded-xl shadow-2xl p-space-md md:p-space-xl flex flex-col gap-space-lg relative overflow-hidden">
+<!-- Header Banner & Department Context -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md bg-surface-container-low rounded-lg p-space-lg relative">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-[0.2em] font-bold">Phase II Verification</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+              2. Team Selection &amp; Guild Affiliation
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Squads compete for departmental glory, cross-functional bragging rights, and placement in the seasonal staff cash prize pool. Choose how you intend to enter the ring.
+            </p>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container-highest/60 px-space-md py-space-sm rounded-lg shrink-0">
+<span class="material-symbols-outlined text-secondary text-[22px]">workspace_premium</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-widest">Active Season Pot</span>
+<span class="font-stat-numeric text-primary leading-tight font-bold">$12,500 USDC</span>
+</div>
+</div>
+</div>
+<!-- Squad Form Choice Selection -->
+<form class="flex flex-col gap-space-md" id="squad-form">
+<!-- Choice 1: Join Studio Squad (Selected Default) -->
+<label class="group relative has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container-high/60 has-[:checked]:bg-surface-container-high has-[:checked]:shadow-lg cursor-pointer transition-all duration-200" id="card-join">
+<input checked="" class="sr-only" name="squad_path" type="radio" value="join">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 transition-transform group-hover:scale-105">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">group_add</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Join Studio Squad</span>
+<span class="font-label-caps text-[10px] px-space-xs py-0.5 rounded-full bg-primary/20 text-primary font-bold uppercase">Popular</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                    Enlist directly with a registered department squad that currently holds open roster allocations.
+                  </p>
+</div>
+</div>
+<!-- Styled Radio Indicator -->
+<div class="w-6 h-6 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0" id="indicator-join">
+<div class="w-3.5 h-3.5 rounded-full bg-transparent group-has-[:checked]:bg-primary group-has-[:checked]:shadow-[0_0_8px_rgba(255,198,101,0.8)]"></div>
+</div>
+</div>
+<!-- Integrated Dropdown Sub-form (Expanded when selected) -->
+<div class="flex flex-col gap-space-xs pt-space-sm mt-space-xs bg-surface-container-lowest/80 p-space-md rounded-lg" id="join-dropdown-wrapper">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider flex items-center justify-between" for="department-squad">
+<span class="">Select Registered Studio Squad</span>
+<span class="text-primary font-body-sm" id="squads-recruiting"></span>
+</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high text-on-surface font-body-md text-body-md px-space-md py-space-sm rounded-lg appearance-none cursor-pointer focus:bg-surface-bright transition-colors pr-10" id="department-squad" name="squad_id">
+<!-- opções: src/data/squads.json -->
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-space-md pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs mt-1 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+<span class="">Automatic Discord squad channel invite trigger on step approval.</span>
+</div>
+</div>
+</label>
+<!-- Choice 2: Free Agent / Sub -->
+<label class="group relative has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container-high/60 has-[:checked]:bg-surface-container-high has-[:checked]:shadow-lg cursor-pointer transition-all duration-200" id="card-agent">
+<input class="sr-only" name="squad_path" type="radio" value="agent">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-outline group-hover:text-primary shrink-0 transition-transform group-hover:scale-105">
+<span class="material-symbols-outlined text-[28px]">person_search</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Free Agent / Substitute Pool</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                    Match me automatically with open departmental squads needing players, stand-ins, or weekend substitute slots.
+                  </p>
+</div>
+</div>
+<!-- Styled Radio Indicator -->
+<div class="w-6 h-6 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0" id="indicator-agent">
+<div class="w-3.5 h-3.5 rounded-full bg-transparent group-has-[:checked]:bg-primary group-has-[:checked]:shadow-[0_0_8px_rgba(255,198,101,0.8)]"></div>
+</div>
+</div>
+<!-- Context Hint Pill -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest/40 rounded-lg">
+<span class="material-symbols-outlined text-[18px] text-tertiary">bolt</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Recommended for part-time schedules or staff awaiting department team assignments.</span>
+</div>
+</label>
+<!-- Choice 3: Found New Team -->
+<label class="group relative has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container-high/60 has-[:checked]:bg-surface-container-high has-[:checked]:shadow-lg cursor-pointer transition-all duration-200" id="card-found">
+<input class="sr-only" name="squad_path" type="radio" value="found">
+<div class="flex items-start justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-outline group-hover:text-secondary shrink-0 transition-transform group-hover:scale-105">
+<span class="material-symbols-outlined text-[28px]">flag</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Found New Team</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">
+                    Establish a new squad insignia, claim department banner rights, and invite colleagues across studio departments.
+                  </p>
+</div>
+</div>
+<!-- Styled Radio Indicator -->
+<div class="w-6 h-6 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0" id="indicator-found">
+<div class="w-3.5 h-3.5 rounded-full bg-transparent group-has-[:checked]:bg-primary group-has-[:checked]:shadow-[0_0_8px_rgba(255,198,101,0.8)]"></div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-space-sm bg-surface-container-lowest/40 rounded-lg">
+<span class="material-symbols-outlined text-[18px] text-outline">military_tech</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">As Squad Founder, you will be designated Team Captain with roster veto authority.</span>
+</div>
+</label>
+</form>
+<!-- Department Honor Code Card -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md p-space-md bg-surface-container-lowest/80 rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">gavel</span>
+<div class="flex flex-col">
+<span class="font-title-ui text-title-ui text-on-surface">Department Ring Integrity</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Cross-departmental mercenary alliances are allowed up to 2 external staff per team.</span>
+</div>
+</div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase flex items-center gap-1 shrink-0 cursor-not-allowed opacity-60" aria-disabled="true" title="Coming soon"><span class="">About Squad Formation</span><span class="material-symbols-outlined text-[16px]">open_in_new</span><span class="sr-only"> (coming soon)</span></span>
+</div>
+<!-- Bottom Action Bar -->
+<div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-space-md pt-space-md">
+<button class="w-full sm:w-auto px-space-lg py-space-sm rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui flex items-center justify-center gap-space-xs transition-colors" type="button" data-nav="back">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="">Back to Step 1</span>
+</button>
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-space-lg py-space-sm rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-title-ui text-title-ui transition-colors" type="button" data-action="save-draft">
+              Save Draft
+            </button>
+<button class="flex-1 sm:flex-none px-space-lg py-space-sm rounded-full bg-primary-container hover:bg-primary text-on-primary-container font-title-ui text-title-ui flex items-center justify-center gap-space-xs shadow-lg transition-transform hover:scale-[1.02]" data-nav="next" type="submit" form="squad-form">
+<span class="">Continue to Step 3: Games &amp; Disciplines</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Department Leaderboard Snippet Footer Note -->
+<div class="flex items-center justify-center gap-space-md text-center text-outline font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="">Studio Champions League {{site.season.year}}</span>
+</span>
+<span class="">•</span>
+<span class="">Registered Staff: 74</span>
+<span class="">•</span>
+<span class="">Active Squads: 12</span>
+</div>
+</div>
+</div>
+<!-- Interactive State Controller Script -->
+
+</div></main><include src="partials/footer.html"></include>
+
+
+
+
+
+<script type="module" src="/js/pages/team.js"></script>
+</body></html>

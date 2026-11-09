@@ -1,0 +1,59 @@
+{
+  "seasonId": "autumn-split",
+  "totalCents": 285000,
+  "changeVsPreviousPct": 18.5,
+  "rules": {
+    "shares": {
+      "first": 50,
+      "second": 30,
+      "third": 15
+    },
+    "fairPlayRules": true,
+    "guildBadge": true,
+    "updatedBy": "vivi#0001",
+    "updatedHoursAgo": 20
+  },
+  "consolationWinners": 5,
+  "ledger": [
+    {
+      "id": "tx_4829A",
+      "code": "#4829A",
+      "handle": "alex_design",
+      "tournament": "CS2 Summer Invitational",
+      "amountCents": 5000,
+      "minutesAgo": 14
+    },
+    {
+      "id": "tx_4828F",
+      "code": "#4828F",
+      "handle": "dev_dan",
+      "tournament": "Smash: Tavern Brawl",
+      "amountCents": 2500,
+      "minutesAgo": 60
+    },
+    {
+      "id": "tx_4827C",
+      "code": "#4827C",
+      "handle": "sarah_lore",
+      "tournament": "LoL: Rift Clashes",
+      "amountCents": 2500,
+      "minutesAgo": 180
+    },
+    {
+      "id": "tx_4826X",
+      "code": "#4826X",
+      "handle": "kyle_lead",
+      "tournament": "Studio Sparks: Val",
+      "amountCents": 5000,
+      "minutesAgo": 300
+    },
+    {
+      "id": "tx_4825M",
+      "code": "#4825M",
+      "handle": "vivi#0001",
+      "tournament": "CS2 Summer Invitational",
+      "amountCents": 10000,
+      "minutesAgo": 480
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Team Manager" description="Manage your roster and review join requests."></include>
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active="teams"></include><main id="main-content" tabindex="-1" aria-busy="true" class=" w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Interactive Script for Tab/Filter/Check-in State Simulation -->
+
+<!-- Ambient Golden Backlighting Elements -->
+<div class="relative w-full overflow-hidden bg-surface">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[980px] h-[360px] bg-gradient-to-b from-primary/15 via-primary-container/5 to-transparent blur-[120px] pointer-events-none"></div>
+<div class="max-w-[1440px] mx-auto px-margin py-space-xl flex flex-col gap-space-xl relative z-10">
+<div id="team-error" role="alert" hidden class="mx-auto max-w-[1440px] w-full mb-space-md p-space-md rounded-xl bg-error-container text-on-error-container flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<span class="font-body-md text-body-md" id="team-error-message">We couldn't load your squad.</span>
+<button type="button" id="team-retry" class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-title-ui text-title-ui">Try again</button>
+</div>
+<!-- SECTION 1: Header & Team Overview Banner -->
+<section class="w-full bg-surface-container rounded-xl shadow-2xl p-space-lg md:p-space-xl relative overflow-hidden">
+<!-- Background Heraldic Watermark Overlay -->
+<div class="absolute -right-12 -top-12 opacity-5 pointer-events-none select-none text-primary">
+<span class="material-symbols-outlined" style="font-size: 320px; font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-lg">
+<!-- Crest, Squad Identity & Captaincy -->
+<div class="flex items-start md:items-center gap-space-md">
+<div class="relative flex-shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-surface-container-high p-1 flex items-center justify-center shadow-[0_0_24px_rgba(229,169,60,0.3)]">
+<img class="w-full h-full object-cover rounded-lg" alt="" data-src="crestSrc">
+</div>
+<span class="absolute -bottom-2 -right-2 bg-primary text-on-primary rounded-full p-1 shadow-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-primary px-space-xs py-0.5 rounded bg-surface-container-highest tracking-widest font-semibold" data-text="division">—</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span> <span data-text="tagline">—</span>
+                </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight" data-text="name">—</h1>
+<div class="flex items-center gap-space-sm pt-1">
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-high shadow-inner">
+<span class="material-symbols-outlined text-primary text-[15px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-title-ui text-title-ui text-on-surface" data-text="captain.handle">—</span> <span class="font-label-caps text-label-caps text-primary px-1.5 py-0.2 rounded bg-primary/20" data-text="captain.title">—</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline" data-text="captain.division|bullet">—</span>
+</div>
+</div>
+</div>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-space-sm w-full lg:w-auto">
+<button type="button" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-space-md py-space-sm bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-title-ui text-title-ui rounded-full shadow-[0_0_20px_rgba(229,169,60,0.35)] transition-all">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span class="">Invite Free Agent</span>
+</button>
+<button type="button" class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-space-md py-space-sm bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-title-ui rounded-full transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">edit_square</span>
+<span class="">Edit Insignia</span>
+</button>
+<button type="button" class="flex items-center justify-center p-space-sm bg-surface-container-high hover:bg-surface-bright text-primary rounded-full transition-colors shadow-sm" title="Scrim Matchmaking" aria-label="Scrim Matchmaking">
+<span class="material-symbols-outlined text-[20px]">swords</span>
+</button>
+</div>
+</div>
+<!-- Telemetry Stats Strip -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm mt-space-lg pt-space-lg bg-surface-container-low/70 p-space-md rounded-lg">
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">trophy</span> TOURNAMENT POINTS
+            </span>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-numeric text-stat-numeric text-primary" data-text="stats.points">—</span>
+<span class="font-body-sm text-body-sm text-primary/80"><span data-text="stats.pointsDelta|signed">—</span> this cycle</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">leaderboard</span> STUDIO STANDINGS
+            </span>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-numeric text-stat-numeric text-on-surface" data-text="stats.standing|rank">—</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" data-text="stats.standingNote">—</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">sports_esports</span> ENROLLED TITLES
+            </span>
+<div class="flex items-center gap-1.5 pt-1" id="enrolled-titles"></div>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">query_stats</span> WIN / LOSS RECORD
+            </span>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-numeric text-stat-numeric text-on-surface"><span data-text="stats.wins">—</span>W - <span data-text="stats.losses">—</span>L</span>
+<span class="font-label-caps text-label-caps text-primary"><span data-text="stats.winRatePct">—</span>% WR</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: Upcoming Squad Schedule & Match Check-in (Elevated Alert Banner) -->
+<section class="w-full bg-surface-container-high rounded-xl p-space-lg relative overflow-hidden shadow-xl" id="next-match" hidden>
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-primary px-space-xs py-0.5 rounded bg-primary/10 tracking-widest font-semibold">UPCOMING MATCH FIXTURE</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Round: <span data-text="nextMatch.round">—</span> BO<span data-text="nextMatch.bestOf">—</span></span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5" data-text="matchTitle">—</h2>
+<p class="font-body-md text-body-md text-on-surface-variant" data-text="matchSchedule">—</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md w-full lg:w-auto">
+<div class="flex flex-col bg-surface-container-lowest p-space-sm rounded-lg text-center sm:text-right">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CHECK-IN READINESS</span>
+<div class="group/ready flex items-center justify-center sm:justify-end gap-1.5 mt-0.5" data-attr="data-state:readinessState">
+<span class="w-2.5 h-2.5 rounded-full bg-error group-data-[state=ready]/ready:bg-secondary group-data-[state=ready]/ready:animate-pulse motion-reduce:animate-none" aria-hidden="true"></span>
+<span class="font-title-ui text-title-ui text-error group-data-[state=ready]/ready:text-primary" data-text="readinessText">—</span>
+</div>
+</div>
+<button type="button" class="px-space-md py-space-sm bg-primary-container text-on-primary-container font-title-ui text-title-ui rounded-full shadow-[0_0_16px_rgba(229,169,60,0.25)] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="">Lock Roster Readiness</span>
+</button>
+</div>
+</div>
+<div class="mt-space-md pt-space-md flex flex-wrap items-center justify-between gap-space-sm text-on-surface-variant font-body-sm text-body-sm bg-surface-container-low/40 p-space-sm rounded-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[16px]">info</span>
+<span class="" data-text="lockNote">—</span>
+</div>
+<span class="font-title-ui text-title-ui text-primary">Lock Countdown: <span id="lock-countdown" role="timer">—</span></span>
+</div>
+</section>
+<!-- SECTION 3: Main Active Roster & Lineup Management (Core) -->
+<section class="w-full flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest font-semibold uppercase">Squad Core</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Active Roster &amp; Member Ranks</h2>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-title-ui text-title-ui text-on-surface-variant">Squad Capacity:</span>
+<span class="px-space-sm py-0.5 bg-surface-container-high rounded text-primary font-stat-numeric text-[14px]"><span data-text="memberCount">—</span> / <span data-text="capacity">—</span> Members</span>
+</div>
+</div>
+<!-- Roster Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md" id="roster-grid" tabindex="-1"></div>
+</section>
+<!-- SECTION 4: Game Discipline Roster Assignments Matrix -->
+<section class="w-full bg-surface-container rounded-xl p-space-lg shadow-xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-md border-b-0">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest font-semibold uppercase">Tournament Disciplines</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Match Discipline Lineup Allocation</h2>
+</div>
+<button type="button" class="flex items-center gap-1.5 px-space-md py-space-xs bg-surface-container-high hover:bg-surface-bright text-primary font-title-ui text-title-ui rounded-full transition-colors self-start sm:self-auto">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span class="">Sync Tournament Lock</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md mt-space-md" id="discipline-grid"></div>
+</section>
+<!-- SECTION 5: Pending Invites & Free Agent Applications -->
+<section class="w-full bg-surface-container rounded-xl p-space-lg shadow-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-md">
+<div>
+<span class="font-label-caps text-label-caps text-primary tracking-widest font-semibold uppercase">Recruitment &amp; Applications</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Studio Free Agents &amp; Outbound Invites</h2>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-full">
+<button type="button" class="px-space-md py-1 bg-primary text-on-primary font-title-ui text-[12px] rounded-full shadow">Inbound Requests (<span data-text="inboundCount">0</span>)</button>
+<button type="button" class="px-space-md py-1 text-on-surface-variant hover:text-on-surface font-title-ui text-[12px] rounded-full">Outbound Pending (<span data-text="outboundCount">0</span>)</button>
+</div>
+</div>
+<!-- Inbound Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md">
+<caption class="sr-only">Pending applications to join your squad</caption>
+<thead>
+<tr class="font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/10">
+<th scope="col" class="py-space-sm px-space-md">APPLICANT</th>
+<th scope="col" class="py-space-sm px-space-md">STUDIO DEPARTMENT</th>
+<th scope="col" class="py-space-sm px-space-md">GAME DISCIPLINES</th>
+<th scope="col" class="py-space-sm px-space-md">PEAK RATING</th>
+<th scope="col" class="py-space-sm px-space-md text-right">LEADER DECISION</th>
+</tr>
+</thead>
+<tbody id="inbound-rows"></tbody>
+</table>
+</div>
+<div id="outbound-list" class="flex flex-col"></div>
+</section>
+<!-- Bottom Integrity & Captaincy Guild Seal Section -->
+<section aria-label="Fair play reminder" class="w-full p-space-md rounded-lg bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-body-sm text-body-sm"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[20px]">workspace_premium</span><span class="">Have fun &amp; play fair • Tavernlight Champions League</span></div></section>
+</div>
+</div>
+</div><template id="tpl-title-pill"><span class="px-1.5 py-0.5 rounded bg-surface-container-highest font-label-caps text-[10px] text-on-surface" data-text="code|upper"></span></template>
+<template id="tpl-roster-card">
+<div data-attr="id:domId;data-member-id:id;data-member:handle;data-status:status" class="roster-card flex flex-col justify-between bg-surface-container rounded-xl p-space-md shadow-lg relative overflow-hidden group/roster">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden bg-surface-container-highest group-data-[status=sub]/roster:opacity-85">
+<img class="w-full h-full object-cover" alt="" data-src="avatarSrc" loading="lazy" decoding="async">
+<span data-unless="avatarSrc" data-text="handle|initials" class="absolute inset-0 flex items-center justify-center font-title-ui text-title-ui text-on-surface-variant" aria-hidden="true"></span>
+<span data-if="isCaptain" class="absolute top-0 right-0 p-0.5 bg-primary text-on-primary text-[10px] rounded-bl flex items-center"><span class="material-symbols-outlined text-[12px] icon-fill">star</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-ui text-title-ui text-on-surface" data-text="handle"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" data-text="department"></span>
+<span class="font-label-caps text-[10px] text-on-surface-variant group-data-[status=starter]/roster:text-primary" data-text="roleLabel"></span>
+</div>
+</div>
+<span class="status-badge font-label-caps text-label-caps px-space-xs py-0.5 rounded bg-surface-bright text-on-surface-variant group-data-[status=starter]/roster:bg-primary-container group-data-[status=starter]/roster:text-on-primary-container font-bold tracking-widest"><span class="hidden group-data-[status=starter]/roster:inline">ACTIVE STARTER</span><span class="group-data-[status=starter]/roster:hidden">RESERVE</span></span>
+</div>
+<div class="my-space-md p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-1.5">
+<template data-each="ratings"><div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 text-on-surface"><span class="material-symbols-outlined text-[15px] text-tertiary data-[game=cs2]:text-primary data-[game=lol]:text-secondary" data-attr="data-game:game" data-text="game|gameIcon"></span><span data-text="label"></span></span>
+<span class="font-title-ui text-on-surface-variant text-[12px]" data-text="stat"></span>
+</div></template>
+</div>
+<div class="flex items-center justify-between pt-space-xs gap-space-xs">
+<span data-if="isCaptain" class="font-label-caps text-[11px] text-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">shield</span> SQUAD OWNER</span>
+<button data-if="isCaptain" type="button" class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-[12px] rounded-lg transition-colors">Captain Controls</button>
+<button data-unless="isCaptain" type="button" class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-[12px] rounded-lg transition-colors flex items-center gap-1" data-action="toggle-status"><span class="material-symbols-outlined text-[14px]">swap_vert</span><span class="status-text"><span class="hidden group-data-[status=starter]/roster:inline">Bench to Sub</span><span class="group-data-[status=starter]/roster:hidden">Set to Starter</span></span></button>
+<div data-unless="isCaptain" class="flex items-center gap-1">
+<button type="button" class="p-1 hover:bg-surface-container-highest text-on-surface-variant hover:text-primary rounded" title="Promote to Co-Captain" aria-label="Promote to Co-Captain"><span class="material-symbols-outlined text-[18px]">verified</span></button>
+<button type="button" class="p-1 hover:bg-error-container text-outline hover:text-error rounded" data-action="remove" data-attr="data-target:domId;aria-label:removeLabel" aria-label="Remove member" title="Remove member"><span class="material-symbols-outlined text-[18px]">person_remove</span></button>
+</div>
+</div>
+</div>
+</template>
+<template id="tpl-inbound-row">
+<tr class="border-b border-surface-container-highest/30 hover:bg-surface-container-high/40 transition-colors" data-attr="id:domId">
+<td class="py-space-md px-space-md"><div class="flex items-center gap-space-sm">
+<div class="relative w-9 h-9 rounded-full overflow-hidden bg-surface-container-highest flex-shrink-0">
+<img class="w-full h-full object-cover" alt="" data-src="avatarSrc" loading="lazy" decoding="async">
+<span data-unless="avatarSrc" data-text="handle|initials" class="absolute inset-0 flex items-center justify-center font-label-caps text-label-caps text-on-surface-variant" aria-hidden="true"></span>
+</div>
+<div class="flex flex-col"><span class="font-title-ui text-title-ui text-on-surface" data-text="handle"></span><span class="font-body-sm text-body-sm text-on-surface-variant" data-text="note"></span></div>
+</div></td>
+<td class="py-space-md px-space-md text-on-surface-variant" data-text="department"></td>
+<td class="py-space-md px-space-md"><div class="flex items-center gap-1.5">
+<template data-each="disciplines"><span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant data-[game=cs2]:text-primary data-[game=lol]:text-secondary font-label-caps text-[10px]" data-attr="data-game:game" data-text="label"></span></template>
+</div></td>
+<td class="py-space-md px-space-md font-stat-numeric text-[15px] text-primary" data-text="peakRating"></td>
+<td class="py-space-md px-space-md text-right"><div class="flex items-center justify-end gap-space-xs">
+<button type="button" class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-[12px] rounded-lg transition-colors">Inspect</button>
+<button type="button" class="px-space-sm py-1 bg-surface-container-high hover:bg-error-container text-outline hover:text-error font-title-ui text-[12px] rounded-lg transition-colors" data-action="invite" data-decision="decline" data-attr="data-target:domId;data-invite-id:id">Decline</button>
+<button type="button" class="px-space-sm py-1 bg-primary text-on-primary hover:bg-primary-container font-title-ui text-[12px] rounded-lg transition-colors shadow" data-action="invite" data-decision="accept" data-attr="data-target:domId;data-invite-id:id">Accept to Squad</button>
+</div></td>
+</tr>
+</template>
+<template id="tpl-outbound">
+<div class="mt-space-md p-space-sm bg-surface-container-low/60 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm" data-attr="id:domId">
+<div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[18px]">forward_to_inbox</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Pending Outbound Invite: <strong class="text-on-surface font-semibold" data-text="handle"></strong> (<span data-text="department"></span>) — Sent <span data-text="sentAt|agoLong"></span></span></div>
+<div class="flex items-center gap-space-xs"><span class="font-label-caps text-[11px] text-outline">Expires in <span data-text="expiresAt|left"></span></span>
+<button type="button" class="px-space-sm py-0.5 bg-surface-container-high hover:bg-surface-bright text-on-surface font-title-ui text-[11px] rounded transition-colors" data-action="revoke" data-attr="data-target:domId;data-invite-id:id">Revoke Invite</button></div>
+</div>
+</template>
+<template id="tpl-discipline-squad">
+<div class="group/disc bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm" data-attr="data-tone:tone;data-game:game">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary group-data-[tone=secondary]/disc:bg-secondary group-data-[tone=tertiary]/disc:bg-tertiary" aria-hidden="true"></span><span class="font-title-ui text-title-ui text-on-surface font-bold" data-text="name"></span></div>
+<span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded text-primary bg-primary/10 group-data-[tone=secondary]/disc:text-secondary group-data-[tone=secondary]/disc:bg-secondary/10 group-data-[tone=tertiary]/disc:text-tertiary group-data-[tone=tertiary]/disc:bg-tertiary/10" data-text="format"></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant" data-text="note"></p>
+<div class="flex flex-col gap-1.5 mt-space-xs">
+<template data-each="slots"><div class="flex items-center justify-between bg-surface-container p-space-xs px-space-sm rounded">
+<span data-unless="isOpen" class="font-body-sm text-body-sm text-on-surface" data-text="slotLabel"></span>
+<span data-if="isOpen" class="font-body-sm text-body-sm text-on-surface-variant" data-text="slotLabel"></span>
+<span data-unless="isOpen" class="font-label-caps text-[10px] text-primary group-data-[tone=secondary]/disc:text-secondary group-data-[tone=tertiary]/disc:text-tertiary" data-text="status|upper"></span>
+<span data-if="isOpen" class="font-label-caps text-[10px] text-error">OPEN</span>
+</div></template>
+</div>
+</div>
+</template>
+<template id="tpl-discipline-solo">
+<div class="group/disc bg-surface-container-low rounded-lg p-space-md flex flex-col gap-space-sm" data-attr="data-tone:tone;data-game:game">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary group-data-[tone=secondary]/disc:bg-secondary group-data-[tone=tertiary]/disc:bg-tertiary" aria-hidden="true"></span><span class="font-title-ui text-title-ui text-on-surface font-bold" data-text="name"></span></div>
+<span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded text-primary bg-primary/10 group-data-[tone=secondary]/disc:text-secondary group-data-[tone=secondary]/disc:bg-secondary/10 group-data-[tone=tertiary]/disc:text-tertiary group-data-[tone=tertiary]/disc:bg-tertiary/10" data-text="format"></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant" data-text="note"></p>
+<div class="flex flex-col gap-1.5 mt-space-xs">
+<div data-if="lead" class="flex items-center justify-between bg-surface-container p-space-xs px-space-sm rounded">
+<div class="flex flex-col"><span class="font-body-sm text-body-sm text-on-surface">Lead Representative: <span data-text="lead.handle"></span></span><span class="font-label-caps text-[10px] text-on-surface-variant" data-text="lead.detail"></span></div>
+<span class="font-label-caps text-[10px] text-primary group-data-[tone=secondary]/disc:text-secondary group-data-[tone=tertiary]/disc:text-tertiary">PRIMARY DUELIST</span>
+</div>
+<div data-unless="lead" class="flex items-center justify-between bg-surface-container p-space-xs px-space-sm rounded"><span class="font-body-sm text-body-sm text-on-surface-variant">Lead Representative</span><span class="font-label-caps text-[10px] text-error">OPEN</span></div>
+<div data-if="backup" class="mt-2 p-space-sm rounded bg-surface-container-high/60 flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant">SECONDARY BACKUP CANDIDATE</span>
+<div class="flex items-center justify-between"><span class="font-body-sm text-body-sm text-on-surface-variant"><span data-text="backup.handle"></span> (<span data-text="backup.detail"></span>)</span>
+<button type="button" class="font-label-caps text-[11px] text-primary hover:underline">Designate Backup</button></div>
+</div>
+</div>
+</div>
+</template>
+</main><include src="partials/footer.html"></include>
+
+
+
+
+<script type="module" src="/js/pages/teammanager.js"></script>
+</body></html>

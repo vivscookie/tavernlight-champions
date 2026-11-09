@@ -1,0 +1,3 @@
+# Ferramenta interna: não indexar. (Remova se o site for público.)
+User-agent: *
+Disallow: /

@@ -1,0 +1,334 @@
+{
+  "id": "ironforge",
+  "name": "Ironforge Knights",
+  "tagline": "Frontend & Engine Squad",
+  "division": "Division 01 • Studio Elite",
+  "crestUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuD0rMX73YnmxPmqRAJDvTd5lxpsWLMt_UDH7A3eVrSvuGbu4VqHOcDgZHT2k9fBYz3Ele02XspN8qrNae5T-UgYQzKIcdVQd9IECiGyvQm1r_fZNkuAVIO9mkLNCSHiYi4A2AnSLeaO5mYnVXhTVjR5PVVkCoUGq4WRpz3m8J-lHdb7P7fMP-5D6G2zmVTpVjpPvm4A7aytdfTZdSqqYKWHLss-piDm_fbkq7cimB1xXS3ps4Ble4PB0A",
+  "captain": {
+    "handle": "vivi#0001",
+    "title": "CAPTAIN / IGL",
+    "division": "Core Engineering Division"
+  },
+  "capacity": 8,
+  "enrolledTitles": [
+    "cs2",
+    "lol",
+    "smash"
+  ],
+  "stats": {
+    "points": 168,
+    "pointsDelta": 24,
+    "standing": 2,
+    "standingNote": "Top 5% Studio",
+    "wins": 12,
+    "losses": 3
+  },
+  "members": [
+    {
+      "id": "m_1",
+      "handle": "vivi#0001",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDYkIPFvHBTK2L_X8DPqL-GqVQg94DgpzU4m7yZSEkfHjTJnQuRRcNlEjPAYhNhEDWL3V-5vOFGkMYZUar8N8e7DEXRM7l-Az5txMAJMoWRiqJlbYcG6FUjO10iOV-5xJSPiCAg54-VmACNfaR21g0zV6v4HERVnBhopqzjp0kg-2IIiSazJztv3gBfAzId8NvNXxswuXlrP67Zh04gxL69jj3R43mrG3KKoKpPnAgVyJA8aFlDI9GF0g",
+      "department": "Frontend Engineering",
+      "roleLabel": "IN-GAME LEADER / IGL",
+      "isCaptain": true,
+      "status": "starter",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Faceit Lvl 10",
+          "stat": "2,180 ELO"
+        },
+        {
+          "game": "lol",
+          "label": "LoL: Emerald II",
+          "stat": "Mid / Support"
+        }
+      ]
+    },
+    {
+      "id": "m_2",
+      "handle": "dev_dan",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDMnsV1AkgnkIWMYku0BfzLaKzpTx97X4PVNFKK0lT0wNrfFB5mAh5lEdgZU8YJOgd-slIPylKHDcDnKKsZbVCotl22ADpsIxgYEKCy1NyD996MzSeumswpSuFk3Hu5c8QFauPDW0oB4JuXn5s3C90-doGSPcmsPoxT3WQXsaBPGpESPFmvddcCEWqtG7DfcNOlPzobFTRV_sx7rbI0DoGA4z_nAPbFs2bjml3ILFNsVFnGQEXKoyYP1w",
+      "department": "Core Engine Runtime",
+      "roleLabel": "RIFLER / ANCHOR",
+      "isCaptain": false,
+      "status": "starter",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Faceit Lvl 9",
+          "stat": "1,940 ELO"
+        },
+        {
+          "game": "smash",
+          "label": "Smash: Lead Fox",
+          "stat": "14.2M GSP"
+        }
+      ]
+    },
+    {
+      "id": "m_3",
+      "handle": "lead_be",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuClwCc0EV1E3S8x8sV4lHGU-1j1fSmjryvOVDMyV6PTAv9c7XFX8IqZdDB0Xsmevrzzpjo5iXzfKztGHYwvEYw-qinbr6QmKG5eQcO0TuV8CoF06h-AaISSTR9CpXGdB1hbVdxlQTAcWkH6AFOw7K_oR9BsvTTzXx6v7X89Q5zi0OuHUjzmIRN4d7QtXv1FB-xDVlOBRdANkSjGOoABUaXjTQ7kfDfeoQyUL1ahoeOayAQOVoZfXLZ_Hg",
+      "department": "Backend & Network",
+      "roleLabel": "SUPPORT / UTILITY",
+      "isCaptain": false,
+      "status": "starter",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Premier 16.4k",
+          "stat": "Top 4%"
+        },
+        {
+          "game": "lol",
+          "label": "LoL: Diamond IV",
+          "stat": "Support"
+        }
+      ]
+    },
+    {
+      "id": "m_4",
+      "handle": "pixel_art",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDS3nAeoC5_2vIeJBoiNs9pQT74mha-315Lqa5HBfOE5kBPLfDlifPjN9tPNtRx4iHApQrbTIxFnPW3Nhgvp8AQ_kktiYyqc3yBkbgGdhkxFj_M9kpqOakP_yiE_DC-CvjjwmlT66_C5HiJ56bQtMPzDPVUS6eXH17eYaNVPzChqy3HAkznIDK-1z2g1texhiqcqVB12pwRLVxGddUmcXKEhl7SrLwT7H8z6epQDV6fSDZ5ZJEti3hoRw",
+      "department": "Tech Art & Shaders",
+      "roleLabel": "ENTRY FRAGGER",
+      "isCaptain": false,
+      "status": "starter",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Faceit Lvl 8",
+          "stat": "1,810 ELO"
+        },
+        {
+          "game": "valorant",
+          "label": "Valorant: Ascendant 2",
+          "stat": "Duelist"
+        }
+      ]
+    },
+    {
+      "id": "m_5",
+      "handle": "alex_d",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAhQfB0PuOltgfaM1Milw7wLM7qRXchr6b_tlny8IatsoUnLOITc9QjhSLh_tdyU9LRa-1elcRDawXyz01DBrIDjsVexP2jWAHznuDFuPsPRhF7CdxQnsY2mUQTEcxD2IT8xvBGtvBW0Ef4Lk83fB13SdF_bQeC5RUDWmaVd40a5InDpG12J4Vszrel4sHcyDEEEfpsYfrcgVxPLbYXhBunGJqGi3AjvGy_obMUGqm8SYFesTtB-9lnhw",
+      "department": "Combat Design",
+      "roleLabel": "AWPER / FLEX",
+      "isCaptain": false,
+      "status": "starter",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Faceit Lvl 9",
+          "stat": "1,990 ELO"
+        },
+        {
+          "game": "lol",
+          "label": "LoL: Emerald I",
+          "stat": "Top / Jungle"
+        }
+      ]
+    },
+    {
+      "id": "m_6",
+      "handle": "sub_sam",
+      "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuDoDBlxm65qkET41xsoZtMIR_1sIZT58Bbimd0147Ajye2vpmSlkZP87NszF0DlinPUHkGHg-sEykBqN0o8ONkGVzupOCxlguJg_abHrkxR7DByJvf8mEobd6sF0wyrOEWZT7eKFDYUwxv5_nZy2rJmYKhPFZVLAljtux5vdEaTWtH5mneBxpSd6-WNRW2jPuvyBaYjZs6O2q6jMtOZCklJ5OIOv9sCbhxP19-3eOFwvcbIGVQBz0nrTg",
+      "department": "QA & Automation",
+      "roleLabel": "ROTATING SUB",
+      "isCaptain": false,
+      "status": "sub",
+      "ratings": [
+        {
+          "game": "cs2",
+          "label": "CS2: Faceit Lvl 7",
+          "stat": "1,620 ELO"
+        },
+        {
+          "game": "lol",
+          "label": "LoL: Platinum I",
+          "stat": "Bot / ADC"
+        }
+      ]
+    }
+  ],
+  "invites": {
+    "inbound": [
+      {
+        "id": "inv_in_1",
+        "handle": "marcus_fx",
+        "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAkwjSNLRXnsxQs13h42rexAg3dYADOFzE3g33-HIqgmLYZ8OyHEoSZwQT5Ii84r8kNtPlui11Xws_Mhxp3zH-lh7HWKSvHIVDz4f-zBIfClQqHFn7B_hW7_gAT9oV6K0zR7R0u6IxB8oXMs5pEVp9zgbvfH-O7W11aW04wF_PiY3vIQfJn4zb-4K9RltfQCeIpI3a-7FaUl_hvs19hIv4hRQMJAeprq45B3cEPb_PQAHkvq6hDd8CEWA",
+        "note": "Looking for CS2 / LoL squad",
+        "department": "World & Environment Art",
+        "disciplines": [
+          {
+            "game": "cs2",
+            "label": "CS2 (Faceit 8)"
+          },
+          {
+            "game": "lol",
+            "label": "LoL (Plat II)"
+          }
+        ],
+        "peakRating": "1,840 ELO"
+      },
+      {
+        "id": "inv_in_2",
+        "handle": "audio_val",
+        "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuAuFU_brUFACk45s6m20JUf3j95fUM99Iu8btTvJ_5pMBTrk5UiACk8LDuAE4qQmtFzcvJE5qMAoX-cYTg21TOuLtN7-0rhJ97tKLZ6rqJnZedbv1N3sZxRwwT8HKTaUh5YoW7B7WZGcCPb91gh2kilPssHKCgL_MvaXG2UG25sj4JrtQc23XkvHyKNgpp7krG6H8tSu6nDV6xnqYYQxrVNJLTqJczWB342Xs9TW0uXh50IKg5oJjySMA",
+        "note": "Super Smash & Valorant Rep",
+        "department": "Audio & Music Synthesis",
+        "disciplines": [
+          {
+            "game": "smash",
+            "label": "Smash Ultimate"
+          },
+          {
+            "game": "cs2",
+            "label": "CS2 (12k)"
+          }
+        ],
+        "peakRating": "13.9M GSP"
+      }
+    ],
+    "outbound": [
+      {
+        "id": "inv_out_1",
+        "handle": "tanya_ui",
+        "department": "UI/UX Engineering",
+        "sentHoursAgo": 18,
+        "expiresInHours": 6
+      }
+    ]
+  },
+  "nextMatch": {
+    "id": "match_ironforge_sf1",
+    "game": "cs2",
+    "gameLabel": "CS2",
+    "round": "Semifinals",
+    "bestOf": 3,
+    "opponent": {
+      "name": "Ravencrest Syndicate",
+      "division": "Product & Ops Div.",
+      "seed": 1,
+      "record": {
+        "wins": 12,
+        "losses": 2
+      },
+      "crestUrl": null
+    },
+    "startsInMinutes": 150,
+    "server": "Official League Server 04",
+    "lobby": "Studio Lobby A",
+    "checkInLocksMinutesBeforeStart": 15,
+    "swapWindowMinutes": 10,
+    "stage": "Knockout",
+    "format": "5v5",
+    "mapPool": [
+      "Mirage",
+      "Inferno",
+      "Anubis"
+    ],
+    "voice": {
+      "label": "Voice #Arena-1",
+      "url": "https://discord.com"
+    }
+  },
+  "disciplines": [
+    {
+      "game": "cs2",
+      "name": "Counter-Strike 2",
+      "kind": "squad",
+      "tone": "primary",
+      "format": "5v5 Starter Set",
+      "note": "Primary competitive focus for current studio seasonal cup.",
+      "slots": [
+        {
+          "position": "1",
+          "memberId": "m_1",
+          "detail": "Captain / IGL",
+          "status": "locked"
+        },
+        {
+          "position": "2",
+          "memberId": "m_2",
+          "detail": "Anchor",
+          "status": "locked"
+        },
+        {
+          "position": "3",
+          "memberId": "m_3",
+          "detail": "Support",
+          "status": "locked"
+        },
+        {
+          "position": "4",
+          "memberId": "m_4",
+          "detail": "Entry",
+          "status": "locked"
+        },
+        {
+          "position": "5",
+          "memberId": "m_5",
+          "detail": "AWP",
+          "status": "locked"
+        }
+      ]
+    },
+    {
+      "game": "lol",
+      "name": "League of Legends",
+      "kind": "squad",
+      "tone": "secondary",
+      "format": "5v5 Starter Set",
+      "note": "Scheduled for Wednesday 20:00 EST Studio Summoner League.",
+      "slots": [
+        {
+          "position": "Top",
+          "memberId": "m_5",
+          "detail": "Emerald I",
+          "status": "active"
+        },
+        {
+          "position": "Jungle",
+          "memberId": "m_6",
+          "detail": "Plat I",
+          "status": "active"
+        },
+        {
+          "position": "Mid",
+          "memberId": "m_1",
+          "detail": "Emerald II",
+          "status": "active"
+        },
+        {
+          "position": "ADC",
+          "memberId": "m_2",
+          "detail": "Gold I",
+          "status": "active"
+        },
+        {
+          "position": "Support",
+          "memberId": "m_3",
+          "detail": "Diamond IV",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "game": "smash",
+      "name": "Smash Ultimate",
+      "kind": "solo",
+      "tone": "tertiary",
+      "format": "1v1 Solo Lead Rep",
+      "note": "Individual duel points aggregate into studio guild tally.",
+      "lead": {
+        "memberId": "m_2",
+        "detail": "Fox / Joker (14.2M Elite GSP)"
+      },
+      "backup": {
+        "memberId": "m_4",
+        "detail": "Samus"
+      }
+    }
+  ]
+}

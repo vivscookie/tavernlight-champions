@@ -1,0 +1,457 @@
+openapi: 3.1.0
+info:
+  title: Tavernlight Champions League API
+  version: 1.0.0
+  description: Contrato v1. Texto completo e regras de negócio em docs/api-contract.md.
+servers:
+  - url: /api
+security:
+  - sessionCookie: []
+paths:
+  /gamertags/availability:
+    get:
+      operationId: checkGamertagAvailability
+      parameters:
+        - { name: name, in: query, required: true, schema: { type: string, minLength: 3, maxLength: 16, pattern: '^[A-Za-z0-9_-]+$' } }
+      responses:
+        '200': { description: Disponibilidade, content: { application/json: { schema: { $ref: '#/components/schemas/Availability' } } } }
+        '422': { $ref: '#/components/responses/Error' }
+  /registrations:
+    post:
+      operationId: submitRegistration
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' }, { $ref: '#/components/parameters/CsrfToken' } ]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/RegistrationRequest' } } } }
+      responses:
+        '201': { description: Inscrição confirmada, content: { application/json: { schema: { $ref: '#/components/schemas/RegistrationResponse' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # gamertag_taken | already_registered
+        '422': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+  /matches/{matchId}/result:
+    post:
+      operationId: publishMatchResult
+      parameters:
+        - { name: matchId, in: path, required: true, schema: { type: string, pattern: '^[0-9]+$' } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+        - { $ref: '#/components/parameters/CsrfToken' }
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/MatchResultRequest' } } } }
+      responses:
+        '201': { description: Resultado publicado, content: { application/json: { schema: { $ref: '#/components/schemas/MatchResultResponse' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # already_published
+        '422': { $ref: '#/components/responses/Error' }   # validation_failed | series_not_decided
+        '429': { $ref: '#/components/responses/Error' }
+  /pool/rules:
+    put:
+      operationId: savePoolRules
+      parameters: [ { $ref: '#/components/parameters/CsrfToken' } ]
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/PoolRules' } } } }
+      responses:
+        '200': { description: Regras salvas, content: { application/json: { schema: { $ref: '#/components/schemas/PoolRulesResponse' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '403': { $ref: '#/components/responses/Error' }
+        '422': { $ref: '#/components/responses/Error' }
+        '429': { $ref: '#/components/responses/Error' }
+  /seasons/{seasonId}/pool:
+    get:
+      operationId: getPool
+      parameters: [ { name: seasonId, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Pote da temporada, content: { application/json: { schema: { $ref: '#/components/schemas/Pool' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+  /teams/mine:
+    get:
+      operationId: getTeam
+      responses:
+        '200': { description: Time do usuário logado, content: { application/json: { schema: { $ref: '#/components/schemas/Team' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+  /teams/mine/members/{memberId}:
+    parameters: [ { name: memberId, in: path, required: true, schema: { type: string } } ]
+    patch:
+      operationId: updateMemberStatus
+      parameters: [ { $ref: '#/components/parameters/CsrfToken' } ]
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [status], properties: { status: { type: string, enum: [starter, sub] } } } } } }
+      responses:
+        '200': { description: Membro atualizado, content: { application/json: { schema: { $ref: '#/components/schemas/Member' } } } }
+        '403': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # captain_locked
+        '422': { $ref: '#/components/responses/Error' }
+    delete:
+      operationId: removeMember
+      parameters: [ { $ref: '#/components/parameters/CsrfToken' } ]
+      responses:
+        '204': { description: Removido }
+        '403': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # captain_locked
+  /teams/mine/invites/{inviteId}/decision:
+    post:
+      operationId: decideInvite
+      parameters:
+        - { name: inviteId, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+        - { $ref: '#/components/parameters/CsrfToken' }
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [decision], properties: { decision: { type: string, enum: [accept, decline] } } } } } }
+      responses:
+        '200': { description: Resposta registrada, content: { application/json: { schema: { type: object, required: [status], properties: { status: { type: string, enum: [accepted, declined] }, member: { $ref: '#/components/schemas/Member' } } } } } }
+        '403': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # squad_full
+        '422': { $ref: '#/components/responses/Error' }
+  /teams/mine/invites/{inviteId}:
+    delete:
+      operationId: revokeInvite
+      parameters:
+        - { name: inviteId, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/CsrfToken' }
+      responses:
+        '204': { description: Convite cancelado }
+        '403': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+  /seasons/{seasonId}/events:
+    get:
+      operationId: getEvents
+      parameters: [ { name: seasonId, in: path, required: true, schema: { type: string } } ]
+      responses:
+        '200': { description: Eventos em andamento e futuros, content: { application/json: { schema: { $ref: '#/components/schemas/EventList' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+  /events/{eventId}/rsvp:
+    put:
+      operationId: setRsvp
+      parameters:
+        - { name: eventId, in: path, required: true, schema: { type: string } }
+        - { $ref: '#/components/parameters/CsrfToken' }
+      requestBody: { required: true, content: { application/json: { schema: { type: object, required: [going], properties: { going: { type: boolean } } } } } }
+      responses:
+        '200': { description: Evento atualizado, content: { application/json: { schema: { $ref: '#/components/schemas/CalendarEvent' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+        '404': { $ref: '#/components/responses/Error' }
+        '409': { $ref: '#/components/responses/Error' }   # rsvp_closed | rsvp_not_available
+        '422': { $ref: '#/components/responses/Error' }
+  /me/dashboard:
+    get:
+      operationId: getDashboard
+      responses:
+        '200': { description: Painel da pessoa logada, content: { application/json: { schema: { $ref: '#/components/schemas/Dashboard' } } } }
+        '401': { $ref: '#/components/responses/Error' }
+components:
+  securitySchemes:
+    sessionCookie: { type: apiKey, in: cookie, name: session }
+  parameters:
+    IdempotencyKey: { name: Idempotency-Key, in: header, required: true, schema: { type: string, format: uuid } }
+    CsrfToken: { name: X-CSRF-Token, in: header, required: false, schema: { type: string } }
+  responses:
+    Error:
+      description: Erro
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, examples: [validation_failed, gamertag_taken, already_registered, already_published, series_not_decided, unauthenticated, forbidden, rate_limited, internal_error] }
+            message: { type: string }
+            fields: { type: object, additionalProperties: { type: string } }
+    Availability:
+      type: object
+      required: [name, available]
+      properties: { name: { type: string }, available: { type: boolean } }
+    RegistrationRequest:
+      type: object
+      required: [seasonId, gamertag, department, squad, games, stake]
+      properties:
+        seasonId: { type: string, const: autumn-split }
+        gamertag: { type: string, minLength: 3, maxLength: 16, pattern: '^[A-Za-z0-9_-]+$' }
+        department: { type: string, enum: [game_design, frontend_engineering, backend_infrastructure, art_animation, qa_playtesting, product_operations, community_marketing] }
+        squad:
+          type: object
+          required: [path]
+          properties:
+            path: { type: string, enum: [join, agent, found] }
+            squadId: { type: [string, 'null'], enum: [ironforge, dragonmaw, pixel, infra, null] }
+        games: { type: array, uniqueItems: true, items: { type: string, enum: [cs2, lol, valorant, smash, rl, aoe] } }
+        stake:
+          type: object
+          required: [amountCents, payrollConsent]
+          properties:
+            amountCents: { type: integer, minimum: 0, maximum: 50000 }
+            payrollConsent: { type: boolean, description: 'Obrigatório true quando amountCents > 0' }
+    RegistrationResponse:
+      type: object
+      required: [id, status, createdAt]
+      properties: { id: { type: string }, status: { type: string, const: confirmed }, createdAt: { type: string, format: date-time } }
+    MatchResultRequest:
+      type: object
+      required: [bestOf, maps]
+      properties:
+        bestOf: { type: integer, enum: [1, 3, 5] }
+        maps:
+          type: array
+          minItems: 1
+          maxItems: 5
+          items:
+            type: object
+            required: [number, teamA, teamB]
+            properties:
+              number: { type: integer, minimum: 1 }
+              teamA: { type: integer, minimum: 0, maximum: 99 }
+              teamB: { type: integer, minimum: 0, maximum: 99 }
+        mvp: { type: [string, 'null'], maxLength: 40 }
+        notes: { type: string, maxLength: 500 }
+    MatchResultResponse:
+      type: object
+      required: [matchId, status, winsA, winsB]
+      properties: { matchId: { type: string }, status: { type: string, const: published }, winsA: { type: integer }, winsB: { type: integer } }
+    PoolRules:
+      type: object
+      required: [seasonId, shares, fairPlayRules, guildBadge]
+      properties:
+        seasonId: { type: string }
+        shares:
+          type: object
+          required: [first, second, third]
+          properties:
+            first: { type: integer, minimum: 30, maximum: 70 }
+            second: { type: integer, minimum: 15, maximum: 40 }
+            third: { type: integer, minimum: 5, maximum: 25 }
+        fairPlayRules: { type: boolean }
+        guildBadge: { type: boolean }
+    PoolRulesResponse:
+      allOf:
+        - $ref: '#/components/schemas/PoolRules'
+        - type: object
+          properties:
+            shares:
+              type: object
+              properties: { mvp: { type: integer, minimum: 5 } }
+    Rating:
+      type: object
+      required: [game, label, stat]
+      properties: { game: { type: string }, label: { type: string }, stat: { type: string } }
+    Member:
+      type: object
+      required: [id, handle, department, roleLabel, isCaptain, status, ratings]
+      properties:
+        id: { type: string }
+        handle: { type: string }
+        avatarUrl: { type: [string, 'null'], format: uri }
+        department: { type: string }
+        roleLabel: { type: string }
+        isCaptain: { type: boolean }
+        status: { type: string, enum: [starter, sub] }
+        ratings: { type: array, items: { $ref: '#/components/schemas/Rating' } }
+    InboundInvite:
+      type: object
+      required: [id, handle, note, department, disciplines, peakRating]
+      properties:
+        id: { type: string }
+        handle: { type: string }
+        avatarUrl: { type: [string, 'null'], format: uri }
+        note: { type: string }
+        department: { type: string }
+        disciplines: { type: array, items: { type: object, required: [game, label], properties: { game: { type: string }, label: { type: string } } } }
+        peakRating: { type: string }
+    OutboundInvite:
+      type: object
+      required: [id, handle, department, sentAt, expiresAt]
+      properties:
+        id: { type: string }
+        handle: { type: string }
+        department: { type: string }
+        sentAt: { type: string, format: date-time }
+        expiresAt: { type: string, format: date-time }
+    Team:
+      type: object
+      required: [id, name, tagline, division, capacity, enrolledTitles, captain, stats, nextMatch, disciplines, members, invites]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        tagline: { type: string }
+        division: { type: string }
+        crestUrl: { type: [string, 'null'], format: uri }
+        capacity: { type: integer, minimum: 1 }
+        enrolledTitles: { type: array, items: { type: string } }
+        captain: { type: object, required: [handle, title, division], properties: { handle: { type: string }, title: { type: string }, division: { type: string } } }
+        stats:
+          type: object
+          required: [points, pointsDelta, standing, standingNote, wins, losses, winRatePct]
+          properties:
+            points: { type: integer }
+            pointsDelta: { type: integer }
+            standing: { type: integer }
+            standingNote: { type: string }
+            wins: { type: integer }
+            losses: { type: integer }
+            winRatePct: { type: integer, minimum: 0, maximum: 100 }
+        nextMatch: { oneOf: [ { $ref: '#/components/schemas/NextMatch' }, { type: 'null' } ] }
+        disciplines: { type: array, items: { $ref: '#/components/schemas/Discipline' } }
+        members: { type: array, items: { $ref: '#/components/schemas/Member' } }
+        invites:
+          type: object
+          required: [inbound, outbound]
+          properties:
+            inbound: { type: array, items: { $ref: '#/components/schemas/InboundInvite' } }
+            outbound: { type: array, items: { $ref: '#/components/schemas/OutboundInvite' } }
+    Payout:
+      type: object
+      required: [place, kind, sharePct, amountCents]
+      properties:
+        place: { type: string, examples: ['1', '2', '3', '4-8'] }
+        kind: { type: string, enum: [podium, consolation] }
+        sharePct: { type: integer }
+        amountCents: { type: integer }
+        winners: { type: integer }
+        eachCents: { type: integer }
+    LedgerEntry:
+      type: object
+      required: [id, code, handle, tournament, amountCents, at]
+      properties:
+        id: { type: string }
+        code: { type: string }
+        handle: { type: string }
+        tournament: { type: string }
+        amountCents: { type: integer, minimum: 1 }
+        at: { type: string, format: date-time }
+    Pool:
+      type: object
+      required: [seasonId, totalCents, changeVsPreviousPct, rules, payouts, ledger]
+      properties:
+        seasonId: { type: string }
+        totalCents: { type: integer, minimum: 0 }
+        changeVsPreviousPct: { type: number }
+        rules:
+          type: object
+          required: [shares, fairPlayRules, guildBadge, updatedBy, updatedAt]
+          properties:
+            shares: { type: object, required: [first, second, third, mvp], properties: { first: { type: integer }, second: { type: integer }, third: { type: integer }, mvp: { type: integer } } }
+            fairPlayRules: { type: boolean }
+            guildBadge: { type: boolean }
+            updatedBy: { type: string }
+            updatedAt: { type: string, format: date-time }
+        payouts: { type: array, items: { $ref: '#/components/schemas/Payout' } }
+        ledger: { type: array, items: { $ref: '#/components/schemas/LedgerEntry' } }
+    NextMatch:
+      type: object
+      required: [id, game, gameLabel, round, bestOf, stage, format, mapPool, voice, opponent, startsAt, server, lobby, swapWindowMinutes, checkIn]
+      properties:
+        id: { type: string }
+        game: { type: string }
+        gameLabel: { type: string }
+        round: { type: string }
+        bestOf: { type: integer, enum: [1, 3, 5] }
+        stage: { type: string }
+        format: { type: string, examples: ['5v5'] }
+        mapPool: { type: array, items: { type: string } }
+        voice: { oneOf: [ { type: 'null' }, { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string, format: uri } } } ] }
+        opponent: { $ref: '#/components/schemas/MatchTeam' }
+        startsAt: { type: string, format: date-time }
+        server: { type: string }
+        lobby: { type: string }
+        swapWindowMinutes: { type: integer, minimum: 0 }
+        checkIn:
+          type: object
+          required: [confirmed, required, locksAt]
+          properties:
+            confirmed: { type: integer, minimum: 0 }
+            required: { type: integer, minimum: 0 }
+            locksAt: { type: string, format: date-time }
+    LineupSlot:
+      type: object
+      required: [position, memberId, handle, detail, status]
+      properties:
+        position: { type: string }
+        memberId: { type: [string, 'null'] }
+        handle: { type: [string, 'null'] }
+        detail: { type: [string, 'null'] }
+        status: { type: string, enum: [locked, active, open] }
+    SoloPick:
+      type: object
+      required: [memberId, handle, detail]
+      properties: { memberId: { type: string }, handle: { type: string }, detail: { type: string } }
+    Discipline:
+      type: object
+      required: [game, name, kind, tone, format, note]
+      properties:
+        game: { type: string }
+        name: { type: string }
+        kind: { type: string, enum: [squad, solo] }
+        tone: { type: string, enum: [primary, secondary, tertiary] }
+        format: { type: string }
+        note: { type: string }
+        slots: { type: array, items: { $ref: '#/components/schemas/LineupSlot' }, description: 'Só em kind=squad' }
+        lead: { oneOf: [ { $ref: '#/components/schemas/SoloPick' }, { type: 'null' } ], description: 'Só em kind=solo' }
+        backup: { oneOf: [ { $ref: '#/components/schemas/SoloPick' }, { type: 'null' } ], description: 'Só em kind=solo' }
+    EventAction:
+      type: object
+      required: [kind]
+      properties:
+        kind: { type: string, enum: [spectate, rsvp, bracket, register] }
+        url: { type: [string, 'null'], format: uri, description: 'spectate | bracket | register; null = indisponível' }
+        going: { type: boolean, description: 'só em kind=rsvp' }
+    CalendarEvent:
+      type: object
+      required: [id, title, description, startsAt, endsAt, status, participating, category, prize, action]
+      properties:
+        id: { type: string }
+        title: { type: string }
+        description: { type: string }
+        startsAt: { type: string, format: date-time }
+        endsAt: { type: string, format: date-time }
+        registrationClosesAt: { type: string, format: date-time }
+        status: { type: string, enum: [scheduled, live_soon, live] }
+        participating: { type: boolean }
+        category: { type: [string, 'null'] }
+        prize:
+          oneOf:
+            - { type: 'null' }
+            - { type: object, required: [kind, amountCents], properties: { kind: { const: cash }, amountCents: { type: integer, minimum: 1 } } }
+            - { type: object, required: [kind], properties: { kind: { const: bragging } } }
+        matchId: { type: string }
+        action: { $ref: '#/components/schemas/EventAction' }
+    EventList:
+      type: object
+      required: [seasonId, events]
+      properties:
+        seasonId: { type: string }
+        events: { type: array, items: { $ref: '#/components/schemas/CalendarEvent' } }
+    MatchTeam:
+      type: object
+      required: [name, division, seed, record, crestUrl]
+      properties:
+        name: { type: string }
+        division: { type: string }
+        seed: { type: integer, minimum: 1 }
+        record: { type: object, required: [wins, losses], properties: { wins: { type: integer }, losses: { type: integer } } }
+        crestUrl: { type: [string, 'null'], format: uri }
+    DashboardMatch:
+      allOf:
+        - $ref: '#/components/schemas/NextMatch'
+        - type: object
+          required: [team]
+          properties:
+            team:
+              type: object
+              required: [name, crestUrl, seed, record]
+              properties:
+                name: { type: string }
+                crestUrl: { type: [string, 'null'], format: uri }
+                seed: { type: integer, minimum: 1 }
+                record: { type: object, required: [wins, losses], properties: { wins: { type: integer }, losses: { type: integer } } }
+    Dashboard:
+      type: object
+      required: [user, season, standing, prizeShare, nextMatch]
+      properties:
+        user: { type: object, required: [handle, displayName, guild], properties: { handle: { type: string }, displayName: { type: string }, guild: { type: string } } }
+        season: { type: object, required: [id, name], properties: { id: { type: string }, name: { type: string } } }
+        standing: { type: object, required: [rank, total, points], properties: { rank: { type: integer, minimum: 1 }, total: { type: integer, minimum: 1 }, points: { type: integer } } }
+        prizeShare: { type: object, required: [amountCents, vaultBonusPct], properties: { amountCents: { type: integer, minimum: 0 }, vaultBonusPct: { type: number, minimum: 0 } } }
+        nextMatch: { oneOf: [ { type: 'null' }, { $ref: '#/components/schemas/DashboardMatch' } ] }

@@ -1,0 +1,13 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Page not found" description="This page does not exist."></include>
+<!-- A 404 é servida na URL que foi pedida (pode ser /a/b/c): links relativos precisam partir da raiz -->
+<base href="/">
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active=""></include><main id="main-content" tabindex="-1" class="focus:outline-none w-full pt-20 min-h-[70vh] flex items-center justify-center">
+<div class="max-w-[560px] px-margin text-center flex flex-col items-center gap-space-md py-space-xl">
+<span class="font-display-hero text-display-hero-mobile sm:text-display-hero text-primary leading-none" aria-hidden="true">404</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">This page wandered off the map</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">The link may be old or mistyped. Head back to the dashboard and pick up from there.</p>
+<a class="px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container font-title-ui text-title-ui font-bold hover:bg-primary transition-colors" href="index.html">Back to the dashboard</a>
+</div>
+</main><include src="partials/footer.html"></include>
+</body></html>

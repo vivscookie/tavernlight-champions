@@ -1,0 +1,20 @@
+{
+  "user": {
+    "handle": "vivi#0001",
+    "displayName": "Vivs",
+    "guild": "Game Design Guild"
+  },
+  "season": {
+    "id": "autumn-split",
+    "name": "Autumn Split 2026"
+  },
+  "standing": {
+    "rank": 4,
+    "total": 31,
+    "points": 176
+  },
+  "prizeShare": {
+    "amountCents": 5000,
+    "vaultBonusPct": 15
+  }
+}

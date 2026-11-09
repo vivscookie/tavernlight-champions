@@ -1,0 +1,68 @@
+{
+  "seasonId": "autumn-split",
+  "events": [
+    {
+      "id": "evt_cup_ko",
+      "title": "Studio Cup 2026 - CS2 Knockout Stage",
+      "description": "Semi-finals clash: Ravencrest vs Ironforge Knights • Spectator stream in Discord #theater",
+      "startsInMinutes": 150,
+      "durationMinutes": 120,
+      "teamParticipates": true,
+      "matchId": "match_ironforge_sf1",
+      "prize": {
+        "kind": "cash",
+        "amountCents": 45000
+      },
+      "category": null,
+      "action": {
+        "kind": "spectate",
+        "url": "https://discord.com"
+      }
+    },
+    {
+      "id": "evt_smash_casual",
+      "title": "Casual Smash Brawl",
+      "description": "Double elimination 3-stock 7-minute • Studio Game Room & Pizza sponsored",
+      "startsInMinutes": 1560,
+      "durationMinutes": 180,
+      "teamParticipates": false,
+      "prize": null,
+      "category": "CASUAL / SOCIAL",
+      "action": {
+        "kind": "rsvp",
+        "going": true
+      }
+    },
+    {
+      "id": "evt_valorant_showdown",
+      "title": "Valorant Department Showdown (Design vs Dev)",
+      "description": "Inter-departmental bragging trophy + engraved golden keyboard prize for winners",
+      "startsInMinutes": 6000,
+      "durationMinutes": 120,
+      "teamParticipates": false,
+      "prize": {
+        "kind": "bragging"
+      },
+      "category": null,
+      "action": {
+        "kind": "bracket",
+        "url": null
+      }
+    },
+    {
+      "id": "evt_rocket_lunch",
+      "title": "Rocket League 3v3 Lunch Cup",
+      "description": "Quick round robin during lunch hour",
+      "startsInMinutes": 8700,
+      "durationMinutes": 60,
+      "teamParticipates": false,
+      "registrationClosesInMinutes": 7200,
+      "prize": null,
+      "category": "SPEEDRUN / 1 HR",
+      "action": {
+        "kind": "register",
+        "url": null
+      }
+    }
+  ]
+}

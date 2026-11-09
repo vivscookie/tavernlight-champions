@@ -1,0 +1,31 @@
+{
+  "name": "tavernlight-champions-league",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "assets:fetch": "node scripts/fetch-assets.mjs",
+    "dev:live": "vite --mode live",
+    "mock-api": "node scripts/mock-server.mjs",
+    "test:api": "node tests/api.contract.test.mjs",
+    "test:backend": "node tests/backend.rules.test.mjs",
+    "test": "npm run test:format && npm run test:api && npm run test:backend && npm run test:build && npm run test:deploy",
+    "test:build": "node tests/build.no-mock.test.mjs",
+    "test:format": "node tests/format.test.mjs",
+    "build:vercel": "VITE_BASE=/ VITE_API_MODE=${VITE_API_MODE:-mock} vite build",
+    "test:deploy": "node tests/deploy.config.test.mjs",
+    "preview:vercel": "node scripts/preview-vercel.mjs"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.31",
+    "tailwindcss": "3.4.17",
+    "vite": "5.4.21"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

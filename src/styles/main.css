@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ajustes que antes ficavam num <style> repetido em cada página */
+@layer base {
+  /* Controles nativos (select, scrollbars, <dialog>) já nascem no tema escuro */
+  html {
+    color-scheme: dark;
+  }
+  /* Foco visível por padrão em tudo que é interativo (classes de foco do Tailwind sobrescrevem) */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid theme('colors.primary');
+    outline-offset: 2px;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    overscroll-behavior: none;
+  }
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Ícones Material Symbols: o estado "preenchido" vira classe, em vez de style inline repetido */
+.icon-fill {
+  font-variation-settings: 'FILL' 1;
+}
+
+/* Esconde a barra de rolagem (comportamento original).
+   Atenção: reduz a descoberta de rolagem; avalie remover. */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Respeita a preferência do sistema por menos movimento: sem pulsos, giros ou transições longas */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

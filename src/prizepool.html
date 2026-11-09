@@ -1,0 +1,228 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<include src="partials/head.html" title="Staff Onboarding: Stakes" description="Pick your voluntary prize pool contribution."></include>
+</head><body class="bg-surface font-body-md text-on-surface antialiased"><include src="partials/header.html" active="staff-onboarding"></include><form id="stake-form" hidden novalidate></form><main id="main-content" tabindex="-1" aria-busy="true" class=" w-full pt-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Atmospheric Ambient Backdrop Glows -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-gradient-to-b from-primary/15 via-primary-container/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-96 left-1/4 w-72 h-72 bg-secondary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative max-w-[1040px] mx-auto px-gutter sm:px-margin pt-space-md pb-space-xl flex flex-col gap-space-lg">
+<include src="partials/stepper.html" current="4"></include>
+<!-- Main Hub Card -->
+<div class="w-full bg-surface-container rounded-xl shadow-xl p-space-md sm:p-space-xl flex flex-col gap-space-xl relative">
+<!-- Top Title Block -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-caps text-label-caps text-primary uppercase tracking-[0.2em]">Tournament Treasury Protocol</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">
+              4. Cash Prize Pool Stakes &amp; Leaderboard Payouts
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">All tournament stakes fund an optional community cash pot. Contributing is 100% voluntary and purely for fun—enter for bragging rights or chip into the prize pool if you want to raise the stakes.</p>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-high rounded-full self-start sm:self-auto"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">100% Optional Community Pot</span></div>
+</div>
+<!-- Highlight Pot Banner -->
+<section aria-label="Community cash pot" class="relative overflow-hidden rounded-xl bg-gradient-to-r from-surface-container-high via-surface-container-highest to-surface-container-high p-space-lg shadow-lg">
+<div id="pool-error" role="alert" hidden class="relative z-10 mb-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-sm rounded-lg bg-error-container text-on-error-container"><span class="font-body-sm text-body-sm" id="pool-error-message">Couldn\'t load the current pot. You can still register.</span><button type="button" id="pool-retry" class="px-space-md py-1 rounded-full bg-surface-container-highest text-on-surface font-title-ui text-title-ui">Try again</button></div>
+<div class="absolute -right-8 -bottom-8 w-44 h-44 rounded-full bg-primary/10 blur-xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-xl bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_20px_rgba(229,169,60,0.4)]">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">Total Community Cash Pot</span>
+<span class="font-display-hero text-display-hero text-primary font-bold leading-none tracking-tight"><span data-text="totalCents|money">—</span></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Funded by voluntary staff contributions • 100% disbursed to top placements</span>
+</div>
+</div>
+<!-- Breakdown telemetry pills -->
+<div class="flex flex-wrap items-center gap-space-sm bg-surface-container-lowest/80 p-space-sm rounded-lg backdrop-blur-md"><div class="flex flex-col px-space-md py-space-xs">
+<span class="font-label-caps text-label-caps text-outline uppercase">Total Contributed</span>
+<span class="font-stat-numeric text-stat-numeric text-on-surface"><span data-text="totalCents|money">—</span></span>
+</div>
+<div class="flex flex-col px-space-md py-space-xs bg-surface-container-high rounded">
+<span class="font-label-caps text-label-caps text-primary uppercase">Guaranteed Payout</span>
+<span class="font-stat-numeric text-stat-numeric text-primary font-bold"><span data-text="totalCents|money">—</span></span>
+</div></div>
+</div>
+</section>
+<!-- Tier Selection Radio Grid -->
+<section class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 id="tier-heading" class="font-headline-sm text-headline-sm text-on-surface">Select Voluntary Cash Stake Tier</h2>
+<span class="font-label-caps text-label-caps text-outline uppercase">Disbursed Via Internal Payroll Bonus</span>
+</div>
+<div aria-labelledby="tier-heading" class="grid grid-cols-1 md:grid-cols-2 gap-space-md" id="stake-tier-group" role="radiogroup">
+<!-- Tier 0 -->
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high aria-checked:bg-surface-container-highest aria-checked:hover:bg-surface-container-highest aria-checked:shadow-xl transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="0" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-lowest group-aria-checked:bg-primary group-aria-checked:shadow-[0_0_8px_rgba(255,198,101,0.8)] flex items-center justify-center">
+<span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent group-aria-checked:bg-on-primary"></span>
+</div>
+<div>
+<h3 class="font-title-ui text-title-ui text-on-surface group-hover:text-primary group-aria-checked:text-primary group-aria-checked:font-bold transition-colors">$0 - Casual Contender</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Zero monetary deduction</p>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps uppercase">Free Tier</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Compete purely for fun, bragging rights, squad standings, and seasonal leaderboards without any monetary prize deduction or cash pool eligibility.</p>
+<div class="pt-space-xs flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant uppercase">
+<span class="">Entry: Free / For Fun</span>
+<span class="">Pot Influence: 0%</span>
+</div></div>
+<!-- Tier 10 -->
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high aria-checked:bg-surface-container-highest aria-checked:hover:bg-surface-container-highest aria-checked:shadow-xl transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="10" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-lowest group-aria-checked:bg-primary group-aria-checked:shadow-[0_0_8px_rgba(255,198,101,0.8)] flex items-center justify-center">
+<span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent group-aria-checked:bg-on-primary"></span>
+</div>
+<div>
+<h3 class="font-title-ui text-title-ui text-on-surface group-hover:text-primary group-aria-checked:text-primary group-aria-checked:font-bold transition-colors">$10 - Challenger Stake</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard cash pot entry</p>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-tertiary font-label-caps text-label-caps uppercase">$10 To Pot</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Standard baseline stake. A friendly voluntary buy-in added directly into the community prize balance for top-placing colleague payout.
+</p>
+<div class="pt-space-xs flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant uppercase">
+<span class="">Contribution: <strong class="text-primary">$10.00</strong></span>
+<span class="">$10 added to the community pot</span>
+</div></div>
+<!-- Tier 25 (Recommended) -->
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high aria-checked:bg-surface-container-highest aria-checked:hover:bg-surface-container-highest aria-checked:shadow-xl transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="25" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-lowest group-aria-checked:bg-primary group-aria-checked:shadow-[0_0_8px_rgba(255,198,101,0.8)] flex items-center justify-center">
+<span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent group-aria-checked:bg-on-primary"></span>
+</div>
+<div>
+<h3 class="font-title-ui text-title-ui text-on-surface group-hover:text-primary group-aria-checked:text-primary group-aria-checked:font-bold transition-colors">$25 - High Stake</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Leaderboard weighted entry</p>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase font-bold">Recommended</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+Recommended tier for competitive squads looking to raise the stakes. Fully qualified for top-tier payout brackets with higher pot weighting.
+</p>
+<div class="pt-space-xs flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant uppercase">
+<span class="">Contribution: <strong class="text-primary">$25.00</strong></span>
+<span class="">$25 added to the community pot</span>
+</div></div>
+<!-- Tier 50 (Selected Active Default) -->
+<div class="tier-card group relative cursor-pointer p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container-high aria-checked:bg-surface-container-highest aria-checked:hover:bg-surface-container-highest aria-checked:shadow-xl transition-all shadow-sm flex flex-col justify-between gap-space-md" data-amount="50" role="radio" tabindex="0" aria-checked="false"><div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="radio-indicator w-5 h-5 rounded-full bg-surface-container-lowest group-aria-checked:bg-primary group-aria-checked:shadow-[0_0_8px_rgba(255,198,101,0.8)] flex items-center justify-center">
+<span class="radio-dot w-2.5 h-2.5 rounded-full bg-transparent group-aria-checked:bg-on-primary"></span>
+</div>
+<div>
+<h3 class="font-title-ui text-title-ui text-on-surface group-hover:text-primary group-aria-checked:text-primary group-aria-checked:font-bold transition-colors">$50 - Champion Stake</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Maximum cash pot contribution</p>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps uppercase font-bold shadow-[0_0_10px_rgba(233,195,73,0.4)]">Top Bracket</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">
+Maximum voluntary stakes tier for high-intensity competition. Fully unlocks all champion payout multipliers for ultimate department bragging rights.
+</p>
+<div class="pt-space-xs flex items-center justify-between font-label-caps text-label-caps text-primary uppercase font-bold">
+<span class="">Contribution: <strong>$50.00</strong></span>
+<span class="">$50 added to the community pot</span>
+</div></div>
+</div>
+<!-- Custom Contribution Input -->
+<div class="w-full bg-surface-container-low rounded-xl p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">account_balance_wallet</span>
+<div>
+<span class="font-title-ui text-title-ui text-on-surface block">Custom Staff Contribution</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Adjust your exact contribution amount before payroll lock</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-highest px-space-md py-space-xs rounded-lg">
+<span class="font-stat-numeric text-stat-numeric text-primary">$</span>
+<input class="w-20 bg-transparent font-stat-numeric text-stat-numeric text-on-surface text-center" id="custom-amount-input" name="stake_amount" form="stake-form" max="500" min="0" type="number" step="0.01" inputmode="decimal" aria-label="Custom contribution in US dollars" value="50">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">USD via payroll deduction</span>
+</div>
+</div>
+</section>
+<!-- STRICTLY MONEY-ONLY Payout Breakdown -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Money-Only Cash Payout Distribution</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calculated against the active <span data-text="totalCents|money">—</span> total cash pot. Distributed via direct deposit bonus.</p>
+</div>
+<div class="flex items-center gap-space-xs text-secondary">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="font-label-caps text-label-caps uppercase">100% Cash Transfers Only</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-sm" id="payout-grid"></div>
+<!-- Monetary Legal Note -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-start gap-space-sm text-on-surface-variant"><span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm">
+<strong class="text-on-surface">Direct Cash Disbursal:</strong> All prizes are paid out directly via cash / payroll bonus. Payout amounts scale dynamically with total studio registrations. No novelty goods, vouchers, or physical collectibles will be distributed.
+</p></div>
+</section>
+<!-- Terms Agreement Pill -->
+<label class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer select-none">
+<input class="w-4 h-4 rounded bg-surface-container-highest accent-primary focus-visible:ring-2 focus-visible:ring-primary cursor-pointer" id="consent-payroll" name="consent_payroll" form="stake-form" type="checkbox">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+            I confirm deduction of my selected stake tier from my next upcoming payroll cycle. I understand all winnings are treated as standard performance bonus cash.
+          </span>
+</label>
+</div>
+<!-- Bottom Action Controls Bar -->
+<div class="w-full bg-surface-container-low rounded-xl p-space-md shadow-lg flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm w-full sm:w-auto">
+<!-- Back Button -->
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-space-xs px-space-lg py-space-xs rounded-full bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-title-ui text-title-ui" type="button" data-nav="back">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+            Back to Step 3
+          </button>
+<!-- Save Draft Button -->
+<button class="flex-1 sm:flex-none px-space-md py-space-xs rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors font-title-ui text-title-ui" type="button" data-action="save-draft">
+            Save Draft
+          </button>
+</div>
+<!-- Submit Button -->
+<button class="w-full sm:w-auto flex items-center justify-center gap-space-sm px-space-xl py-space-sm rounded-full bg-gradient-to-r from-primary-container via-primary to-primary-container text-on-primary-container font-title-ui text-title-ui font-bold shadow-[0_0_24px_rgba(229,169,60,0.35)] hover:shadow-[0_0_32px_rgba(229,169,60,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all" id="btn-register" type="submit" form="stake-form">
+<span class="">Complete Registration &amp; Enter Arena</span>
+<span class="text-[18px]">⚔️</span>
+</button>
+</div>
+</div>
+</div>
+
+</div><template id="tpl-payout">
+<div class="group/row bg-surface-container-high data-[tone=primary]:bg-surface-container-highest data-[tone=primary]:shadow-lg data-[tone=neutral]:bg-surface-container-low data-[tone=muted]:bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-space-md relative overflow-hidden" data-attr="data-tone:tone">
+<div data-if="isFirst" class="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-bl-full pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="w-8 h-8 rounded-full bg-surface-container-lowest text-on-surface group-data-[tone=primary]/row:bg-primary group-data-[tone=primary]/row:text-on-primary group-data-[tone=muted]/row:bg-surface-container group-data-[tone=muted]/row:text-on-surface-variant font-stat-numeric text-[13px] flex items-center justify-center font-bold" data-text="place"></span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant group-data-[tone=primary]/row:text-primary group-data-[tone=primary]/row:font-bold group-data-[tone=tertiary]/row:text-tertiary" data-text="shareLabel"></span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold" data-text="title"></span>
+<span class="font-stat-numeric text-stat-numeric font-bold mt-1 text-on-surface group-data-[tone=primary]/row:text-primary group-data-[tone=tertiary]/row:text-tertiary group-data-[tone=muted]/row:text-on-surface-variant" data-text="amountCents|money" data-attr="id:amountId"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" data-text="note"></span>
+</div>
+<div class="w-full bg-surface-container-lowest group-data-[tone=muted]/row:bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-on-surface-variant group-data-[tone=primary]/row:bg-primary group-data-[tone=tertiary]/row:bg-tertiary group-data-[tone=muted]/row:bg-outline h-full" data-attr="style:barStyle"></div>
+</div>
+</div>
+</template>
+</main><include src="partials/footer.html"></include>
+
+
+
+
+
+<script type="module" src="/js/pages/prizepool.js"></script>
+</body></html>
